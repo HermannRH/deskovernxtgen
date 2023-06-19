@@ -1,0 +1,23 @@
+[
+    {
+      "title": "Niños de 0 a 6 Años",
+      "cond1": ["Meta", "Real"],
+      "cond2": ["Directos", "Indirectos"],
+      "cond3": ["Físicos", "Virtuales"],
+      "value": ["", "","","","", "","",""]
+    },
+    {
+      "title": "Cuidadores",
+      "cond1": ["Meta", "Real"],
+      "cond2": ["Directos", "Indirectos"],
+      "cond3": ["Físicos", "Virtuales"],
+      "value": ["", "","","","", "","",""]
+    },
+    {
+      "title": "Agentes Educativos",
+      "cond1": ["Meta", "Real"],
+      "cond2": ["Directos", "Indirectos"],
+      "cond3": ["Físicos", "Virtuales"],
+      "value": ["", "","","","", "","",""]
+    }
+    ]

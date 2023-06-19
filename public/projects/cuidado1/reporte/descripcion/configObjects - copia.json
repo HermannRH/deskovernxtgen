@@ -1,0 +1,37 @@
+[
+    {
+        "title": "Nombre del proyecto",
+        "type": "text",
+        "value": ""
+    },
+    {
+        "title": "Nombre de la organización",
+        "type": "text",
+        "value": ""
+    },
+    {
+        "title": "Contexto del proyecto",
+        "type": "textarea",
+        "value": ""
+    },
+    {
+        "title": "Problemática que se busca abordar con el proyecto",
+        "type": "textarea",
+        "value": ""
+    },
+    {
+        "title": "Fecha de inicio del proyecto",
+        "type": "date",
+        "value": ""
+    },
+    {
+        "title": "Fecha de finalización del proyecto",
+        "type": "date",
+        "value": ""
+    },
+    {
+        "title": "Objetivos del proyecto",
+        "type": "textarea",
+        "value": ""
+    }
+    ]
