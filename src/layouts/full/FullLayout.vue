@@ -13,7 +13,7 @@ import MainView from './Main.vue';
             <MainView />
             <v-main>
                 <v-container fluid class="page-wrapper">
-                    <div class="maxWidth">
+                    <div >
                         <RouterView />
                     </div>
                 </v-container>
