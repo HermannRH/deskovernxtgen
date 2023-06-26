@@ -4,8 +4,43 @@
     </v-container>
     <v-container fluid>
         <v-card ref="fullscreenCard" class="pa-3">
-            <v-btn @click="goFullscreen">Activar Mapa</v-btn>
-            <div class="arcgis-map" ref="mapViewNode"></div>
+<v-card elevation="2" class="pa-2">
+    <v-row class="d-flex align-items-center justify-center">
+    <v-col cols="12" md="2">
+        <v-btn @click="goFullscreen">
+            <v-icon>mdi-map-marker</v-icon>
+            Activar Mapa
+        </v-btn>
+    </v-col>
+    <v-col cols="12" md="2">
+        <v-btn @click="addData">
+            <v-icon>mdi-plus</v-icon>
+            Agregar Datos
+        </v-btn>
+    </v-col>
+    <v-col cols="12" md="2">
+        <v-btn @click="changeTheme">
+            <v-icon>mdi-palette</v-icon>
+            Cambiar Tema
+        </v-btn>
+    </v-col>
+    <v-col cols="12" md="3">
+        <v-slider v-model="sliderValue"></v-slider>
+    </v-col>
+    <v-col cols="12" md="3">
+        <v-select v-model="selectValue" :items="['Mostrar Etiquetas', 'Ocultar Etiquetas']" label="Etiquetas"></v-select>
+    </v-col>
+</v-row>
+<v-row class="d-flex align-items-center justify-center pb-5">
+    <h2> Esta es la Toolbar del Geovisualizador </h2>
+</v-row>
+
+</v-card>
+
+
+
+
+            <div class="arcgis-map pt-3" ref="mapViewNode"></div>
         </v-card>
     </v-container>
 </template>
@@ -17,6 +52,12 @@ import MapView from '@arcgis/core/views/MapView';
 
 export default {
     name: 'ArcGISMap',
+    data() {
+        return {
+            sliderValue: 50,
+            selectValue: 'Mostrar Etiquetas',
+        };
+    },
     methods: {
         goFullscreen() {
             const card = this.$refs.fullscreenCard.$el;
