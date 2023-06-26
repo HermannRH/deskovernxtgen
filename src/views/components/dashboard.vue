@@ -34,7 +34,7 @@ import ActiveInvestments from '@/components/dashboard/ActiveInvestments.vue';
             </v-row>
         </v-col>
         <v-col class="text-center mt-2">
-            <p class="text-muted">Fundación FEMSA</p>
+            <p class="text-muted">Deskover</p>
         </v-col>
     </v-row>
 </template>
