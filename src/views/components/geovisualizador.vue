@@ -4,42 +4,42 @@
     </v-container>
     <v-container fluid>
         <v-card ref="fullscreenCard" class="pa-3">
-<v-card elevation="2" class="pa-2">
-    <v-row class="d-flex align-items-center justify-center">
-    <v-col cols="12" md="2">
-        <v-btn @click="goFullscreen">
-            <v-icon>mdi-map-marker</v-icon>
-            Activar Mapa
-        </v-btn>
-    </v-col>
-    <v-col cols="12" md="2">
-        <v-btn @click="addData">
-            <v-icon>mdi-plus</v-icon>
-            Agregar Datos
-        </v-btn>
-    </v-col>
-    <v-col cols="12" md="2">
-        <v-btn @click="changeTheme">
-            <v-icon>mdi-palette</v-icon>
-            Cambiar Tema
-        </v-btn>
-    </v-col>
-    <v-col cols="12" md="3">
-        <v-slider v-model="sliderValue"></v-slider>
-    </v-col>
-    <v-col cols="12" md="3">
-        <v-select v-model="selectValue" :items="['Mostrar Etiquetas', 'Ocultar Etiquetas']" label="Etiquetas"></v-select>
-    </v-col>
-</v-row>
-<v-row class="d-flex align-items-center justify-center pb-5">
-    <h2> Esta es la Toolbar del Geovisualizador </h2>
-</v-row>
-
-</v-card>
-
-
-
-
+            <v-card elevation="2" class="pa-2">
+                <v-row class="d-flex align-items-center justify-center">
+                    <v-col cols="12" md="2">
+                        <v-btn @click="goFullscreen">
+                            <v-icon>mdi-map-marker</v-icon>
+                            Activar Mapa
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="2">
+                        <v-btn @click="addData">
+                            <v-icon>mdi-plus</v-icon>
+                            Agregar Datos
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="2">
+                        <v-btn @click="changeTheme">
+                            <v-icon>mdi-palette</v-icon>
+                            Cambiar Tema
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="3">
+                        <v-slider v-model="sliderValue"></v-slider>
+                    </v-col>
+                    <v-col cols="12" md="3">
+                        <v-select v-model="selectValue" :items="['Mostrar Etiquetas', 'Ocultar Etiquetas']"
+                            label="Etiquetas"></v-select>
+                    </v-col>
+                    <v-col cols="12" md="3">
+                        <v-select v-model="selectValue" :items="['Municipios', 'Manzanas']"
+                            label="Cartografía"></v-select>
+                    </v-col>
+                </v-row>
+                <v-row class="d-flex align-items-center justify-center pb-5">
+                    <h2> Esta es la Toolbar del Geovisualizador </h2>
+                </v-row>
+            </v-card>
             <div class="arcgis-map pt-3" ref="mapViewNode"></div>
         </v-card>
     </v-container>
@@ -49,6 +49,7 @@
 import '@arcgis/core/assets/esri/themes/light/main.css';
 import Map from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer'
 
 export default {
     name: 'ArcGISMap',
@@ -65,9 +66,9 @@ export default {
                 card.requestFullscreen();
             } else if (card.msRequestFullscreen) {
                 card.msRequestFullscreen();
-            } else if (card.mozRequestFullScreen) { 
+            } else if (card.mozRequestFullScreen) {
                 card.mozRequestFullScreen();
-            } else if (card.webkitRequestFullscreen) { 
+            } else if (card.webkitRequestFullscreen) {
                 card.webkitRequestFullscreen();
             }
         },
@@ -83,15 +84,26 @@ export default {
     mounted() {
         const mapViewNode = this.$refs.mapViewNode;
         const map = new Map({
-            basemap: 'streets-night-vector'
+            // basemap: 'streets-night-vector'
+            basemap: 'arcgis-topographic'
         });
 
         new MapView({
             container: mapViewNode,
             map: map,
-            center: [-100.3161, 25.6866],
-            zoom: 10,
+            center: [-99.2453, 19.463],
+            zoom: 9,
         });
+        const agsMun = new FeatureLayer({
+            // url: "https://services.arcgis.com/1Nu85FRaEkaZ6Fp7/arcgis/rest/services/01mun/FeatureServer/0", //ags mun
+            // url: "https://services.arcgis.com/1Nu85FRaEkaZ6Fp7/arcgis/rest/services/edomexmun/FeatureServer/0", //edomex mun
+            url: "https://services.arcgis.com/1Nu85FRaEkaZ6Fp7/arcgis/rest/services/edomexman/FeatureServer/0", //edomex man
+            credential: {
+                username: 'soteliin',
+                password: 'arcSOT0809'
+            }
+        });
+        map.add(agsMun);
 
         document.addEventListener('fullscreenchange', this.adjustHeight);
     },
