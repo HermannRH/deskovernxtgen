@@ -85,6 +85,7 @@ export default {
         const mapViewNode = this.$refs.mapViewNode;
         const map = new Map({
             // basemap: 'streets-night-vector'
+            // basemap: 'streets-night-vector'
             basemap: 'arcgis-topographic'
         });
 
