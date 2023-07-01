@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@arcgis/core": "^4.27.5",
-    "@braks/vue-flow": "0.4.38",
+    "@braks/vue-flow": "0.4.41",
     "@kyvg/vue3-notification": "^2.9.1",
     "@popperjs/core": "^2.11.8",
     "@syncfusion/ej2-vue-gantt": "^21.2.10",
