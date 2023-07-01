@@ -18,7 +18,7 @@
     "@tiptap/vue-3": "2.0.3",
     "@vuelidate/core": "^2.0.2",
     "@vuelidate/validators": "^2.0.2",
-    "apexcharts": "3.40.0",
+    "apexcharts": "3.41.0",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
     "frappe-gantt": "^0.6.1",
