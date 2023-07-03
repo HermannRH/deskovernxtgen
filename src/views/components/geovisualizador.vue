@@ -1,187 +1,91 @@
+<!--
 <template>
-    <v-container>
-        <h2 class="pb-5">Geovisualizador v0.000001</h2>
-    </v-container>
-    <v-container fluid>
-        <v-card ref="fullscreenCard" class="pa-3">
-<v-card elevation="2" class="pa-2">
-    <v-row class="d-flex align-items-center justify-center">
-    <v-col cols="12" md="2">
-        <v-btn @click="goFullscreen">
-            <v-icon>mdi-map-marker</v-icon>
-            Activar Mapa
-        </v-btn>
-    </v-col>
-    <v-col cols="12" md="2">
-        <v-btn @click="addData">
-            <v-icon>mdi-plus</v-icon>
-            Agregar Datos
-        </v-btn>
-    </v-col>
-    <v-col cols="12" md="2">
-        <v-btn @click="changeTheme">
-            <v-icon>mdi-palette</v-icon>
-            Cambiar Tema
-        </v-btn>
-    </v-col>
-    <v-col cols="12" md="3">
-        <v-slider v-model="sliderValue"></v-slider>
-    </v-col>
-    <v-col cols="12" md="3">
-        <v-select v-model="selectValue" :items="['Mostrar Etiquetas', 'Ocultar Etiquetas']" label="Etiquetas"></v-select>
-    </v-col>
-</v-row>
-<v-row class="d-flex align-items-center justify-center pb-5">
-    <h2> Esta es la Toolbar del Geovisualizador </h2>
-</v-row>
-
-</v-card>
-
-
-
-
-            <div class="arcgis-map pt-3" ref="mapViewNode"></div>
-        </v-card>
-    </v-container>
+  <div id="map" style="width: 100%; height: 700px;"></div>
 </template>
 
 <script>
-import '@arcgis/core/assets/esri/themes/light/main.css';
-import Map from '@arcgis/core/Map';
-import MapView from '@arcgis/core/views/MapView';
+export default {
+  mounted() {
+    const mapDiv = document.getElementById('map');
+    const iframe = document.createElement('iframe');
+    iframe.style.width = '100%';
+    iframe.style.height = '700px';
+    iframe.style.border = '0';
+    iframe.style.allowfullscreen = 'true';
+    mapDiv.appendChild(iframe);
+
+    const mapUrl = 'https://saoic51v4pnhz4yc.maps.arcgis.com/apps/instant/countdown/index.html?appid=103b0253b3704a499f0bcc4846448d67';
+    const accessToken = 'AAPKf3dad29f663741ee851ea7bce532a040hd1tYsyABrG1ErF_YCgk0ifEZiSkTsus7rjzLDdToyiNc8MEq7iNlBghOv_OMDBE';
+
+    // Set up the message event listener to receive the access token from the iframe
+    window.addEventListener('message', event => {
+      if (event.origin === 'https://saoic51v4pnhz4yc.maps.arcgis.com') {
+        accessToken = event.data;
+        loadMap();
+      }
+    });
+
+    // Load the iframe with the map URL
+    iframe.src = mapUrl;
+
+    function loadMap() {
+      // Create the map using the ArcGIS JavaScript API
+      const map = new window.esri.Map({
+        basemap: 'topo-vector'
+      });
+
+      // Add any additional layers or configurations as needed
+
+      // Set the access token for authentication
+      map.portalItem.setAuthentication({
+        token: accessToken
+      });
+
+      // Display the map in the iframe
+      const mapView = new window.esri.views.MapView({
+        container: mapDiv,
+        map: map
+      });
+    }
+  }
+};
+</script>
+-->
+
+
+
+<template>
+  <div id="map" style="width: 100%; height: 700px;">
+    <iframe src="https://saoic51v4pnhz4yc.maps.arcgis.com/apps/instant/countdown/index.html?appid=103b0253b3704a499f0bcc4846448d67" width="100%" height="700px" frameborder="0" style="border:0" allowfullscreen>iFrames are not supported on this page.</iframe>
+  </div>
+
+</template>
+
+
+
+<!--
+
+<script>
+import { loadModules } from 'esri-loader';
 
 export default {
-    name: 'ArcGISMap',
-    data() {
-        return {
-            sliderValue: 50,
-            selectValue: 'Mostrar Etiquetas',
-        };
-    },
-    methods: {
-        goFullscreen() {
-            const card = this.$refs.fullscreenCard.$el;
-            if (card.requestFullscreen) {
-                card.requestFullscreen();
-            } else if (card.msRequestFullscreen) {
-                card.msRequestFullscreen();
-            } else if (card.mozRequestFullScreen) { 
-                card.mozRequestFullScreen();
-            } else if (card.webkitRequestFullscreen) { 
-                card.webkitRequestFullscreen();
-            }
-        },
-        adjustHeight() {
-            const card = this.$refs.fullscreenCard.$el;
-            if (document.fullscreenElement) {
-                card.querySelector('.arcgis-map').style.height = `${window.innerHeight * 0.9}px`;
-            } else {
-                card.querySelector('.arcgis-map').style.height = '100vh';
-            }
-        },
-    },
-    mounted() {
-        const mapViewNode = this.$refs.mapViewNode;
+  mounted() {
+    loadModules(['esri/Map', 'esri/views/MapView'], { css: true }).then(
+      ([Map, MapView]) => {
         const map = new Map({
-            basemap: 'streets-night-vector'
+          basemap: 'streets' // Cambia esto según el tipo de mapa que desees
         });
 
-        new MapView({
-            container: mapViewNode,
-            map: map,
-            center: [-100.3161, 25.6866],
-            zoom: 10,
+        const view = new MapView({
+          container: 'map',
+          map: map,
+          center: [-77.04, 38.907],
+          zoom: 13
         });
-
-        document.addEventListener('fullscreenchange', this.adjustHeight);
-    },
-    beforeUnmount() {
-        document.removeEventListener('fullscreenchange', this.adjustHeight);
-    }
-}
+      }
+    );
+  }
+};
 </script>
 
-<style scoped>
-.arcgis-map {
-    width: 100%;
-    overflow: hidden;
-}
-</style>
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-<template>
-    <div id="viewDiv"></div>
-</template>
-<script src="https://js.arcgis.com/4.27/"></script>
-<style>
-@import "https://js.arcgis.com/4.27/esri/themes/light/main.css";
-
-html,
-body,
-#viewDiv {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-}
-</style>
-<script>
-    import ExternalScript from "https://js.arcgis.com/4.27/";
-    require(["esri/config", "esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (esriConfig, Map, MapView, FeatureLayer) {
-        esriConfig.apiKey = "AAPK0a2a3f748281424c883403984dc273d7qvCeFpcsqEx0CqRL6W-w0I_t_bzqyhCaduUN3kakuxkMp0QpiV4hSW2S_ljRhcKH";
-
-        const map = new Map({
-            basemap: "arcgis-topographic"
-        });
-        const view = new MapView({
-            map: map,
-            center: [-102.28259, 21.88234],
-            zoom: 10,
-            container: "viewDiv"
-        });
-        const agsMun = new FeatureLayer({
-            url: "https://services.arcgis.com/1Nu85FRaEkaZ6Fp7/arcgis/rest/services/01mun/FeatureServer/0",
-            credential: { 
-                username: 'soteliin',
-                password: 'arcSOT0809'
-            }
-        });
-        map.add(agsMun);
-    });
-</script> -->
+-->
