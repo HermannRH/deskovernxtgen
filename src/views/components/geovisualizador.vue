@@ -104,26 +104,7 @@ export default {
             }
         });
 
-        const featLay = new FeatureLayer({
-            // url: "https://services.arcgis.com/1Nu85FRaEkaZ6Fp7/arcgis/rest/services/01mun/FeatureServer/0",
-            // url: "https://services.arcgis.com/1Nu85FRaEkaZ6Fp7/arcgis/rest/services/01man/FeatureServer/0",
-            url: "https://services.arcgis.com/1Nu85FRaEkaZ6Fp7/arcgis/rest/services/edomexman/FeatureServer/0",
-            credential: {
-                username: 'soteliin',
-                password: 'arcSOT0809'
-            },
-            renderer: {
-                type: 'simple',
-                symbol: {
-                    type: 'simple-fill',
-                    color: '#ff5432',
-                    outline: {
-                        color: '#aa0000',
-                        width: 1
-                    }
-                }
-            }
-        });
+        // const featLay = new FeatureLayer(217c5182497849308367dcfbdbd6ba41,0);
         map.add(featLay);
         let highlight, highlightOld;
         view.when(async () => {
