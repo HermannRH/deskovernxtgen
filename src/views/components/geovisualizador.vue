@@ -83,43 +83,7 @@ export default {
             }
         },
     },
-    mounted() {
-        esriConfig.apiKey = "AAPK0a2a3f748281424c883403984dc273d7qvCeFpcsqEx0CqRL6W-w0I_t_bzqyhCaduUN3kakuxkMp0QpiV4hSW2S_ljRhcKH";
-        // const mapViewNode = this.$refs.mapViewNode;
-        const map = new Map({
-            // basemap: 'streets-night-vector'
-            basemap: 'arcgis-topographic'
-        });
-
-        const view = new MapView({
-            container: 'mapViewNode',
-            map: map,
-            // center: [-100.3161, 25.6866],
-            center: [-99.2453, 19.463],
-            // center: [-102.28259, 21.88234],
-            zoom: 9,
-            highlightOptions: {
-                // color: 'green'
-                color: 'yellow'
-            }
-        });
-
-        // const featLay = new FeatureLayer(217c5182497849308367dcfbdbd6ba41,0);
-        map.add(featLay);
-        let highlight, highlightOld;
-        view.when(async () => {
-            let layerView = await view.whenLayerView(featLay);
-            view.on('pointer-move', async (e) => {
-                const { results } = await view.hitTest(e)
-                const graphic = results[0].graphic;
-                if (highlight) {
-                    highlight?.remove();
-                }
-                highlight = layerView.highlight(graphic);
-            })
-        })
-        document.addEventListener('fullscreenchange', this.adjustHeight);
-    },
+    
     beforeUnmount() {
         document.removeEventListener('fullscreenchange', this.adjustHeight);
     }
