@@ -1,49 +1,54 @@
 <template>
-    <v-container>
-        <h2 class="pb-5">Geovisualizador v0.000001</h2>
-    </v-container>
-    <v-container fluid>
-        <v-card ref="fullscreenCard" class="pa-3">
-            <v-card elevation="2" class="pa-2">
-                <v-row class="d-flex align-items-center justify-center">
-                    <v-col cols="12" md="2">
-                        <v-btn @click="goFullscreen">
-                            <v-icon>mdi-map-marker</v-icon>
-                            Activar Mapa
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="12" md="2">
-                        <v-btn @click="addData">
-                            <v-icon>mdi-plus</v-icon>
-                            Agregar Datos
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="12" md="2">
-                        <v-btn @click="changeTheme">
-                            <v-icon>mdi-palette</v-icon>
-                            Cambiar Tema
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="12" md="3">
-                        <v-slider v-model="sliderValue"></v-slider>
-                    </v-col>
-                    <v-col cols="12" md="3">
-                        <v-select v-model="selectValue" :items="['Mostrar Etiquetas', 'Ocultar Etiquetas']"
-                            label="Etiquetas"></v-select>
-                    </v-col>
-                </v-row>
-                <v-row class="d-flex align-items-center justify-center pb-5">
-                    <h2> Esta es la Toolbar del Geovisualizador </h2>
-                </v-row>
+  <v-container>
+    <h2 class="pb-5">Geovisualizador v0.000001</h2>
+  </v-container>
+  <v-container fluid>
+    <v-card ref="fullscreenCard" class="pa-3">
+      <v-card elevation="2" class="pa-2">
+        <v-row class="d-flex align-items-center justify-center">
+          <v-col cols="12" md="2">
+            <v-btn @click="goFullscreen">
+              <v-icon>mdi-map-marker</v-icon>
+              Activar Mapa
+            </v-btn>
+          </v-col>
+          <v-col cols="12" md="2">
+            <v-btn @click="addData">
+              <v-icon>mdi-plus</v-icon>
+              Agregar Datos
+            </v-btn>
+          </v-col>
+          <v-col cols="12" md="2">
+            <v-btn @click="changeTheme">
+              <v-icon>mdi-palette</v-icon>
+              Cambiar Tema
+            </v-btn>
+          </v-col>
+          <v-col cols="12" md="3">
+            <v-slider v-model="sliderValue"></v-slider>
+          </v-col>
+          <v-col cols="12" md="3">
+            <v-select v-model="selectValue" :items="['Mostrar Etiquetas', 'Ocultar Etiquetas']"
+              label="Etiquetas"></v-select>
+          </v-col>
+        </v-row>
+        <v-row class="d-flex align-items-center justify-center pb-5">
+          <h2> Esta es la Toolbar del Geovisualizador </h2>
+        </v-row>
 
-            </v-card>
-
-
+      </v-card>
 
 
-            <div class="arcgis-map pt-3" id="mapViewNode"></div>
-        </v-card>
-    </v-container>
+
+
+      <div id="map" style="width: 100%; height: 700px;">
+        <iframe
+          src=""
+          width="100%" height="700px" frameborder="0" style="border:0" allowfullscreen>iFrames are not supported on this
+          page.</iframe>
+      </div>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -54,46 +59,46 @@ import MapView from '@arcgis/core/views/MapView';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 
 export default {
-    name: 'ArcGISMap',
-    data() {
-        return {
-            sliderValue: 50,
-            selectValue: 'Mostrar Etiquetas',
-        };
+  name: 'ArcGISMap',
+  data() {
+    return {
+      sliderValue: 50,
+      selectValue: 'Mostrar Etiquetas',
+    };
+  },
+  methods: {
+    goFullscreen() {
+      const card = this.$refs.fullscreenCard.$el;
+      if (card.requestFullscreen) {
+        card.requestFullscreen();
+      } else if (card.msRequestFullscreen) {
+        card.msRequestFullscreen();
+      } else if (card.mozRequestFullScreen) {
+        card.mozRequestFullScreen();
+      } else if (card.webkitRequestFullscreen) {
+        card.webkitRequestFullscreen();
+      }
     },
-    methods: {
-        goFullscreen() {
-            const card = this.$refs.fullscreenCard.$el;
-            if (card.requestFullscreen) {
-                card.requestFullscreen();
-            } else if (card.msRequestFullscreen) {
-                card.msRequestFullscreen();
-            } else if (card.mozRequestFullScreen) {
-                card.mozRequestFullScreen();
-            } else if (card.webkitRequestFullscreen) {
-                card.webkitRequestFullscreen();
-            }
-        },
-        adjustHeight() {
-            const card = this.$refs.fullscreenCard.$el;
-            if (document.fullscreenElement) {
-                card.querySelector('.arcgis-map').style.height = `${window.innerHeight * 0.9}px`;
-            } else {
-                card.querySelector('.arcgis-map').style.height = '100vh';
-            }
-        },
+    adjustHeight() {
+      const card = this.$refs.fullscreenCard.$el;
+      if (document.fullscreenElement) {
+        card.querySelector('.arcgis-map').style.height = `${window.innerHeight * 0.9}px`;
+      } else {
+        card.querySelector('.arcgis-map').style.height = '100vh';
+      }
     },
-    
-    beforeUnmount() {
-        document.removeEventListener('fullscreenchange', this.adjustHeight);
-    }
+  },
+
+  beforeUnmount() {
+    document.removeEventListener('fullscreenchange', this.adjustHeight);
+  }
 }
 </script>
 
 <style scoped>
 .arcgis-map {
-    width: 100%;
-    overflow: hidden;
+  width: 100%;
+  overflow: hidden;
 }
 </style>
 
