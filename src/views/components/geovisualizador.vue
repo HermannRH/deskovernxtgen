@@ -37,9 +37,6 @@
 
 </v-card>
 
-
-
-
             <div class="arcgis-map pt-3" ref="mapViewNode"></div>
         </v-card>
     </v-container>
@@ -74,7 +71,7 @@ export default {
         adjustHeight() {
             const card = this.$refs.fullscreenCard.$el;
             if (document.fullscreenElement) {
-                card.querySelector('.arcgis-map').style.height = `${window.innerHeight * 0.9}px`;
+                card.querySelector('.arcgis-map').style.height = `${window.innerHeight * 0.85}px`;
             } else {
                 card.querySelector('.arcgis-map').style.height = '100vh';
             }
