@@ -7,12 +7,23 @@
 
 <script setup lang="ts">
 import { RouterView } from "vue-router";
+import axios from "axios";
+
+
 </script>
 
 <style>
+html, body {
+  font-family: 'Inter', sans-serif;
+}
+
 #app {
   width: 100vw;
-  height: 100vh;
   overflow: hidden;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('@/assets/Inter.ttf') format('truetype');
 }
 </style>

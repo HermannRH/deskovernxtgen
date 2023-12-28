@@ -2,7 +2,7 @@
 <template>
     <div>
         <v-container fluid>
-            <v-row class="header" align="center" no-gutters>
+            <v-row align="center" no-gutters>
                 <v-col cols="6" class="pl-7">
                     <v-img :src="logoCirculo" class="responsive-img"></v-img>
                 </v-col>
@@ -15,7 +15,7 @@
     </div>
     <div class="black-band">
       <v-container>
-        <v-row class="d-flex align-center text-center justify-center">
+        <v-row class="d-flex text-center justify-center">
           <v-col class="white-text pb-0" cols="12">
             <span>Una membresía, </span>
             <span class="username">infinitas recompensas</span>
@@ -29,35 +29,147 @@
             </v-card>
           </v-col>
 
-          <v-col cols="4"  class="white-text">
+          <v-col cols="4" class="white-text align-start text-center">
             <span>Mis Puntos:<br></span>
             <span class="username">6,789</span>
           </v-col>
-          <v-col cols="4" class="white-text">
+          <v-col cols="4" class="white-text align-start text-center">
             <span>Nivel de membresía<br></span>
             <span class="username">ORO</span>
           </v-col>
-          <v-col cols="4" class="white-text">
-            <span>Beneficios próximos<br></span>
-            <span class="username">Descuento Especial en tu Próximo Viaje</span>
+          <v-col cols="4" class="white-text align-start text-center">
+            <span>Miembro<br></span>
+            <span class="username">10/09/2015</span>
           </v-col>
         </v-row>
       </v-container>
     </div>
     <v-container>
       <v-row>
-        <v-col cols="4" class="align-center text-center big-black-text">
-          <span>Conoce<br>tus<br></span>
-          <span class="username">Beneficios</span>
+        <v-col cols="3" class="align-center text-center big-black-text" v-for="i in 4" :key="i">
+      <div class="window ">
+        <span>Conoce<br>tus<br></span>
+        <span class="username">Beneficios</span>
+      </div>
+    </v-col>
+      </v-row>
+    </v-container>
+    <div class="align-center text-center username pb-4" style="font-size: 2em; padding-top: 80px;">
+      <span>¡Descubre el beneficio de este mes!</span>
+    </div>
+    <div class="grey-band">
+      <v-container class="pa-10">
+        <v-row>
+          <v-col cols="5" class="align-center text-center">
+            <div style="width: 100%; height: 200px; background-color: #cccccc;"></div>
+          </v-col>
+          <v-col cols="7" class="d-flex flex-column align-center justify-center">
+            <span style="font-size: 2em" class="big-black-text">Precio Preferencial en Hotel Andalucía<br></span>
+            <span style="font-size: 2em">Todo el año a solo $850 la noche</span>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+    <v-container class="align-left username pb-4" style="font-size: 2em; padding-top: 80px;">
+      <span>Encuentra tu experiencia favorita</span>
+    </v-container>
+    <v-container>
+      <v-row>
+        <v-col cols="4" class="align-center text-center" v-for="i in 3" :key="i">
+          <div style="width: 100%; height: 200px; background-color: #cccccc;"></div>
+          <span style="font-size: 1.5em" class="big-black-text">Experiencia {{ i }}<br></span>
+          <span style="font-size: 1.5em">Descripción</span>
         </v-col>
       </v-row>
     </v-container>
+    <v-container class="pa-10">
+  <v-row v-for="y in 4" :key="y">
+    <v-col cols="5" class="align-center text-center">
+      <!-- Image placeholder for each item -->
+      <div style="width: 100%; height: 200px; background-color: #cccccc;"></div>
+    </v-col>
+    <v-col cols="7" class="d-flex flex-column align-center justify-center">
+      <!-- Dynamic text content for each item -->
+      <span style="font-size: 1.7em" class="big-black-text">Titulo de oferta {{ v }}<br></span>
+      <span style="font-size: 1.7em">Descripción de la oferta {{ v }}</span>
+    </v-col>
+  </v-row>
+</v-container>
+
+<v-container fluid>
+    <v-row justify="center">
+      <v-col cols="12" class="text-center" >
+        <v-btn variant="plain" text class="username">Términos y condiciones</v-btn>
+        <v-btn variant="plain" text class="username">Preguntas frecuentes</v-btn>
+        <v-btn variant="plain" text class="username">Contáctanos</v-btn>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="12" class="text-center">
+        <span class="caption">&copy; Todos los derechos reservados</span>
+      </v-col>
+    </v-row>
+  </v-container>
+
 </template>
 
+<script>
+import Rewards from '@/components/Rewards.vue';
+import InputData from '@/components/InputData.vue';
+import ImgCirculo from '@/assets/images/logocirculo.png';
+import ImgHospital from '@/assets/images/logohospital.png';
+
+export default {
+    components: {
+        Rewards,
+        InputData,
+    },
+    data() {
+        return {
+            isLoggedIn: true, 
+            logoCirculo: ImgCirculo,
+            logoHospital: ImgHospital,
+            username: 'Juan Perez',
+        };
+    },
+    methods: {
+        login() {
+            // Implement your login logic here
+        },
+        logout() {
+            // Implement your logout logic here
+        },
+    },
+};
+</script>
+
 <style scoped>
+.window {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+
+}
+.window span {
+  font-size: calc(100% + 2vw); /* Adjust as needed */
+}
+.grey-band {
+  background-color: #f2f2f2;
+  height: 300px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  margin: auto;
+  overflow: auto;
+}
 .big-black-text {
     color: #000000;
-    font-size: 70px;
     font-weight: bold;
 }
 .white-text {
@@ -114,33 +226,3 @@
   }
 }
 </style>
-
-<script>
-import Rewards from '@/components/Rewards.vue';
-import InputData from '@/components/InputData.vue';
-import ImgCirculo from '@/assets/images/logocirculo.png';
-import ImgHospital from '@/assets/images/logohospital.png';
-
-export default {
-    components: {
-        Rewards,
-        InputData,
-    },
-    data() {
-        return {
-            isLoggedIn: true, 
-            logoCirculo: ImgCirculo,
-            logoHospital: ImgHospital,
-            username: 'Juan Perez',
-        };
-    },
-    methods: {
-        login() {
-            // Implement your login logic here
-        },
-        logout() {
-            // Implement your logout logic here
-        },
-    },
-};
-</script>
