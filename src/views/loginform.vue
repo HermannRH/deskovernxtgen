@@ -18,16 +18,68 @@
     <v-container class="align-center pt-0 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
         <span style="font-size: 0.8em">Estamos comprometidos en brindarte una atención de calidad y personalizada. Para comenzar tu proceso de registro, por favor, completa el siguiente formulario con atención y precisión. Asegúrate de que todos los datos proporcionados sean correctos antes de enviarlos.</span>
     </v-container>
+    <v-text-field bg-color="purple" label="Nombre completo"></v-text-field>
 
-    <div class="gold-band">
+    <div class="gold-bandx">
       <v-container class="pa-10">
         <v-row>
-          <v-col cols="7" class="d-flex flex-column align-center justify-center">
-            <span style="font-size: 2em" class="big-black-text">Registro de paciente<br></span>
+          <v-col cols="12" class="">
+            <span style="font-size: 2em" class="big-black-text">REGISTRO DE PACIENTE<br></span>
+          </v-col>
+          <v-col>
+            <v-container>
+
+      <v-row>
+        <v-col cols="12" md="4">
+          <v-file-input label="Fotografía del paciente" prepend-icon="mdi-camera" accept=".jpg, .jpeg, .png"></v-file-input>
+        </v-col>
+      </v-row>
+      <!-- Form fields -->
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-text-field bg-color="purple" label="Nombre completo"></v-text-field>
+        </v-col>
+        <v-col cols="12" md="3">
+          <v-select label="Edad" :items="ages"></v-select>
+        </v-col>
+        <v-col cols="12" md="3">
+          <v-select label="Tipo de Sangre" :items="bloodTypes"></v-select>
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field  label="Fecha de nacimiento" placeholder="Día/Mes/Año"></v-text-field>
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field label="Correo electrónico"></v-text-field>
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field label="Teléfono" prepend-icon="mdi-phone"></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-text-field label="Dirección"></v-text-field>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-select label="Aseguradora" :items="insuranceCompanies"></v-select>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-select label="Tipo de seguro" :items="insuranceTypes"></v-select>
+        </v-col>
+      </v-row>
+      <!-- Save button -->
+      <v-row>
+        <v-col cols="12">
+          <v-btn color="primary" large block>Guardar información</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
           </v-col>
         </v-row>
       </v-container>
-    </div>
+      <!-- Title -->
+
+    <!-- Patient photo upload section -->
+    
+  </div>
+
 
 <v-container fluid>
     <v-row justify="center">
@@ -57,6 +109,10 @@ export default {
         return {
             logoCirculo: ImgCirculo,
             logoHospital: ImgHospital,
+            ages: [...Array(100).keys()].map((i) => i + 1),
+            bloodTypes: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+            insuranceCompanies: ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK"],
+            insuranceTypes: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         };
     },
     setup() {
@@ -86,23 +142,22 @@ export default {
     },
 };
 </script>
-<style scoped>
-.window {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
 
-}
-.window span {
-  font-size: calc(100% + 2vw); /* Adjust as needed */
+<style scoped>
+.gold-bandx .white-input input {
+  background-color: white !important;
 }
 .gold-band {
-    background-color: #b68d2cb9;
-    height: 300px;
+  background-color: #D4AF37; /* Golden color */
+}
+
+.display-1 {
+  font-size: 2em;
+  color: #000; /* Black color for text */
+}
+.gold-bandx {
+    background-color: #b68d2cba;
+    height: 800px;
     width: 90%;
     display: flex;
     justify-content: center;
@@ -114,10 +169,8 @@ export default {
 .big-black-text {
     color: #000000;
     font-weight: bold;
-}
-.white-text {
+}.white-text {
     color: #ffffff;
-    font-size: 30px;
     font-weight: bold;
 }
 .transparent-card {
