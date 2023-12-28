@@ -45,6 +45,7 @@ def before_request():
             new = True
 
     if new:
+        # Print the column names of the csv
         with open('users.csv', 'a', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=['ngrok_email', 'ngrok_name'])
             writer.writerow({'ngrok_email': user_email, 'ngrok_name': user_name, 'new': True})
@@ -62,7 +63,7 @@ def get_info():
                 if row['new'] == 'True':
                     return jsonify({'new': True})
                 else:
-                    return jsonify({'form_first_name': row['form_first_name'], 'form_first_surname': row['form_first_surname']})
+                    return jsonify({'form_first_name': row['form_first_name'],'ngrok_email': ngrok_email, 'form_first_surname': row['form_first_surname']})
         else:
             return jsonify({'new': True})
 

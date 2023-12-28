@@ -22,16 +22,16 @@
           </v-col>
           <v-col cols="12" class="d-flex justify-center pb-12">
             <v-card class="transparent-card text-center black-text">
-              
-              <span>¡Bienvenido, </span> 
-            <span class="username">{{ username }}</span>
-            <span>! </span> 
+              <span v-if="username !== 'X'">¡Bienvenido, </span> 
+              <span class="username" v-if="username !== 'X'">{{ username }}</span>
+              <span v-if="username !== 'X'">! </span> 
+              <span v-else>Usuario no Detectado</span>
             </v-card>
           </v-col>
 
           <v-col cols="4" class="white-text align-start text-center">
             <span>Mis Puntos:<br></span>
-            <span class="username">6,789</span>
+            <span class="username">9,876</span>
           </v-col>
           <v-col cols="4" class="white-text align-start text-center">
             <span>Nivel de membresía<br></span>
@@ -129,7 +129,7 @@ export default {
             isLoggedIn: true, 
             logoCirculo: ImgCirculo,
             logoHospital: ImgHospital,
-            username: 'Juan Perez',
+            username: 'X',
         };
     },
     methods: {
