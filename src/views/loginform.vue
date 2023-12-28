@@ -12,6 +12,9 @@
             </v-row>
         </v-container>
     </div>
+    <v-container class="align-center text-center username pt-0 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
+        <span>¡Bienvenido al formulario de registro de pacientes del Hospital Andalucía!</span>
+    </v-container>
     <div class="black-band">
       <v-container>
         <v-row class="d-flex text-center justify-center">
@@ -50,9 +53,6 @@
     </v-col>
       </v-row>
     </v-container>
-    <div class="align-center text-center username pb-4" style="font-size: 2em; padding-top: 80px;">
-      <span>¡Descubre el beneficio de este mes!</span>
-    </div>
     <div class="grey-band">
       <v-container class="pa-10">
         <v-row>
@@ -84,29 +84,46 @@
 
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import logoCirculo from '@/assets/logo_circulo.png';
-import logoHospital from '@/assets/logo_hospital.png';
+import ImgCirculo from '@/assets/images/logocirculo.png';
+import ImgHospital from '@/assets/images/logohospital.png';
 
-let ngrok_email = ref('');
-let form_first_name = ref('');
-let form_second_name = ref('');
-let form_first_surname = ref('');
-let form_second_surname = ref('');
-let phone = ref('');
+export default {
+    data() {
+        return {
+            logoCirculo: ImgCirculo,
+            logoHospital: ImgHospital,
+        };
+    },
+    setup() {
+        const ngrok_email = ref('');
 
-onMounted(async () => {
-    const response = await axios.get('api/info');
-    ngrok_email.value = response.data.ngrok_email;
-});
+        onMounted(async () => {
+            const response = await axios.get('api/info');
+            ngrok_email.value = response.data.ngrok_email;
+        });
 
-const submitForm = () => {
-    // Handle form submission
+        const submitForm = () => {
+            // Handle form submission
+        };
+
+        return {
+            ngrok_email,
+            submitForm,
+        };
+    },
+    methods: {
+        login() {
+            // Implement your login logic here
+        },
+        logout() {
+            // Implement your logout logic here
+        },
+    },
 };
 </script>
-
 <style scoped>
 .window {
   display: flex;
