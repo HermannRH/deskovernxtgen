@@ -167,16 +167,13 @@ export default {
             ngrok_email.value = response.data.ngrok_email;
         });
 
-        const submitForm = () => {
-            // Handle form submission
-        };
         const triggerFileInput = () => {
             fileInput.value?.click();
         };
 
         return {
             ngrok_email,
-            submitForm,
+            
         };
     },
     methods: {
