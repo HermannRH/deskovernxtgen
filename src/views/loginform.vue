@@ -147,14 +147,15 @@ export default {
             insuranceCompanies: ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK"],
             insuranceTypes: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
             name: '',
-            age: null,
+            age: null as number | null,
             bloodType: '',
             birthDate: null,
             email: '',
-            phone: null,
+            phone: "",
             address: '',
             insuranceType: '',
             insuranceCompany: '',
+
         };
     },
     setup() {
@@ -179,11 +180,54 @@ export default {
         };
     },
     methods: {
+      validateForm() {
+        let errors = [];
+        if (!this.name) {
+          errors.push("El nombre es obligatorio.");
+        }
+        if (!this.age || this.age < 13 || this.age > 110) {
+          errors.push("La edad debe estar entre 13 y 110 años.");
+        }
+        if (!this.bloodType) {
+          errors.push("El tipo de sangre es obligatorio.");
+        }
+        if (!this.birthDate) {
+          errors.push("La fecha de nacimiento es obligatoria.");
+        }
+        if (!this.email || !this.email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
+          errors.push("El correo electrónico no es válido.");
+        }
+        if (!this.phone || !this.phone.match(/^\d{10}$/)) {
+          errors.push("El teléfono debe tener 10 dígitos.");
+        }
+        if (!this.address) {
+          errors.push("La dirección es obligatoria.");
+        }
+        if (!this.insuranceType) {
+          errors.push("El tipo de seguro es obligatorio.");
+        }
+        if (!this.insuranceCompany) {
+          errors.push("La compañía de seguros es obligatoria.");
+        }
+
+        if (!this.uploadedImage) {
+          errors.push("La imagen es obligatoria.");
+        }
+        return errors;
+      },
         triggerFileInput() {
             const inputElement = this.$refs.fileInput as HTMLInputElement;
             inputElement.click();
         },
         submitForm() {
+          const formErrors = this.validateForm();
+
+      if (formErrors.length > 0) {
+        formErrors.forEach(error => {
+          this.$notify({ type: 'warn', title: 'Error de Validación', text: error });
+        });
+        return;
+      }
         const formData = {
           name: this.name,
           age: this.age,
@@ -194,6 +238,7 @@ export default {
           address: this.address,
           insuranceType: this.insuranceType,
           insuranceCompany: this.insuranceCompany,
+          image: this.uploadedImage,
         };
         console.log('Submitting form', formData);
         axios.post('api/form', formData)
