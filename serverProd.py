@@ -118,7 +118,7 @@ def get_info():
                 if row['new'] == 'True':
                     return jsonify({'new': True})
                 else:
-                    return jsonify({'form_first_name': row['form_first_name'],'ngrok_email': ngrok_email, 'form_first_surname': row['form_first_surname']})
+                    return jsonify({'form_first_name': row['form_first_name'],'ngrok_email': ngrok_email})
         else:
             return jsonify({'new': True})
 

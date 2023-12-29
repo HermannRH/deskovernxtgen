@@ -13,7 +13,7 @@
         </v-container>
     </div>
     <v-container class="align-center text-center username pt-0 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
-        <span>¡Bienvenido al formulario de registro de pacientes del Hospital Andalucía!</span>
+        <span>¡Bienvenid@ al formulario de registro de pacientes del Hospital Andalucía!</span>
     </v-container>
     <v-container class="align-center pt-0 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
         <span style="font-size: 0.8em">Estamos comprometidos en brindarte una atención de calidad y personalizada. Para comenzar tu proceso de registro, por favor, completa el siguiente formulario con atención y precisión. Asegúrate de que todos los datos proporcionados sean correctos antes de enviarlos.</span>
@@ -135,6 +135,9 @@ import axios from 'axios';
 import ImgCirculo from '@/assets/images/logocirculo.png';
 import ImgHospital from '@/assets/images/logohospital.png';
 import uploadlogo from '@/assets/images/uploadlogo.png'
+import { useRouter } from 'vue-router';
+
+
 
 export default {
     data() {
@@ -155,7 +158,7 @@ export default {
             address: '',
             insuranceType: '',
             insuranceCompany: '',
-
+            router : useRouter(),
         };
     },
     setup() {
@@ -173,7 +176,7 @@ export default {
 
         return {
             ngrok_email,
-            
+
         };
     },
     methods: {
@@ -240,12 +243,17 @@ export default {
         console.log('Submitting form', formData);
         axios.post('api/form', formData)
             .then(response => {
-                // Handle success
-                console.log('Form submitted successfully', response);
+              console.log('Form submitted successfully', response);
+              this.$notify({ type: 'success', title: 'Éxito', text: 'Sus datos fueron registrados correctamente.' });
+              setTimeout(() => {
+                this.$router.push('/');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 3000);
+                
             })
             .catch(error => {
-                // Handle error
                 console.error('Error submitting form', error);
+                this.$notify({ type: 'error', title: 'Error', text: 'Hubo un problema con sus datos, porfavor recarga la página y vuelva a intentar' });
             });
     },
     handleFileUpload(event: Event) {

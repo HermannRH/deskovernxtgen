@@ -22,8 +22,8 @@
           </v-col>
           <v-col cols="12" class="d-flex justify-center pb-12">
             <v-card class="transparent-card text-center black-text">
-              <span v-if="username !== 'X'">¡Bienvenido, </span> 
-              <span class="username" v-if="username !== 'X'">{{ username }}</span>
+              <span v-if="username !== 'X'">¡Hola  </span> 
+              <span class="username" v-if="username !== 'X'">{{ username.split(' ')[0] }}</span>
               <span v-if="username !== 'X'">! </span> 
               <span v-else>Usuario no Detectado</span>
             </v-card>
@@ -118,28 +118,62 @@ import Rewards from '@/components/Rewards.vue';
 import InputData from '@/components/InputData.vue';
 import ImgCirculo from '@/assets/images/logocirculo.png';
 import ImgHospital from '@/assets/images/logohospital.png';
+import { onBeforeMount, ref } from 'vue';
+import axios from "axios";
+import { useRouter } from 'vue-router';
 
 export default {
-    components: {
-        Rewards,
-        InputData,
-    },
-    data() {
-        return {
-            isLoggedIn: true, 
-            logoCirculo: ImgCirculo,
-            logoHospital: ImgHospital,
-            username: 'X',
-        };
-    },
-    methods: {
-        login() {
-            // Implement your login logic here
-        },
-        logout() {
-            // Implement your logout logic here
-        },
-    },
+  setup(_, { emit }) {
+    // Declaring reactive data properties
+    const isLoggedIn = ref(true);
+    const router = useRouter();
+    const logoCirculo = ref(ImgCirculo);
+    const logoHospital = ref(ImgHospital);
+    const formFirstName = ref('');
+    const ngrokEmail = ref('');
+    const username = ref('X');
+
+    // Method to fetch data
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('api/info');
+        if (response.data.new) {
+          router.push('/login');
+        } else {
+          formFirstName.value = response.data.form_first_name;
+          ngrokEmail.value = response.data.ngrok_email;
+
+          if (formFirstName.value !== '') {
+            username.value = formFirstName.value;
+          } else {
+            router.push('/login');
+          }
+        }
+      } catch (error) {
+        router.push('/login');
+      }
+    };
+
+    // Lifecycle hook
+    onBeforeMount(() => {
+      fetchData();
+    });
+
+    // Return all reactive data and methods
+    return {
+      isLoggedIn,
+      logoCirculo,
+      logoHospital,
+      formFirstName,
+      ngrokEmail,
+      username,
+      fetchData,
+    };
+  },
+  components: {
+    Rewards,
+    InputData,
+  },
 };
 </script>
 
