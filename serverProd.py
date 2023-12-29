@@ -14,7 +14,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 import psycopg2
 import csv
-
+import base64
+import random
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -27,7 +28,24 @@ CORS(app)
 
 uidirectory = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'dist')
 
-import csv
+
+def save_image(base64_string, name_prefix):
+    # Extract the base64 part by splitting the string
+    header, base64_str = base64_string.split(',', 1)
+    
+    # Check if the directory 'photos' exists, if not create one
+    os.makedirs('photos', exist_ok=True)
+    
+    # Generate a random 4 digit number and create the image filename
+    random_number = random.randint(1000, 9999)
+    filename = f"{name_prefix}_{random_number}.png"
+    filepath = os.path.join('photos', filename)
+    
+    # Decode the base64 string and write the image to a file
+    with open(filepath, 'wb') as f:
+        f.write(base64.b64decode(base64_str))
+        
+    return filename
 
 @app.before_request
 def before_request():
@@ -47,9 +65,46 @@ def before_request():
     if new:
         # Print the column names of the csv
         with open('users.csv', 'a', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames=['ngrok_email', 'ngrok_name'])
+            writer = csv.DictWriter(file, fieldnames=['ngrok_email', 'ngrok_name', 'new'])
             writer.writerow({'ngrok_email': user_email, 'ngrok_name': user_name, 'new': True})
         
+@app.route('/api/form', methods=['POST'])
+def handle_form():
+    form_data = request.json
+    image_filename = save_image(form_data['image'], form_data['name'].split(' ')[0])
+    csv_file_path = 'users.csv'
+    user_email = request.headers.get('Ngrok-Auth-User-Email')
+
+    # Read the CSV file into a list of dictionaries
+    with open(csv_file_path, mode='r') as file:
+        reader = csv.DictReader(file)
+        data = list(reader)
+
+    # Update the relevant dictionary
+    for row in data:
+        if row['ngrok_email'] == user_email:
+            row.update({
+                'ngrok_name': form_data['name'],
+                'new': 'False',
+                'form_first_name': form_data['name'],
+                'form_age': form_data['age'],
+                'form_blood': form_data['bloodType'],
+                'form_birthday': form_data['birthDate'],
+                'form_email': form_data['email'],
+                'form_phone': form_data['phone'],
+                'form_loc': form_data['address'],
+                'form_insura': form_data['insuranceCompany'],
+                'form_intype': form_data['insuranceType'],
+                'img_name': image_filename
+            })
+
+    # Write the list back to the CSV file
+    with open(csv_file_path, mode='w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=data[0].keys())
+        writer.writeheader()
+        writer.writerows(data)
+
+    return jsonify({'message': 'Form submitted successfully', 'image_filename': image_filename}), 200
 
 @app.route('/api/info')
 def get_info():
