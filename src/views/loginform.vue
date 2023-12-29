@@ -19,18 +19,25 @@
         <span style="font-size: 0.8em">Estamos comprometidos en brindarte una atención de calidad y personalizada. Para comenzar tu proceso de registro, por favor, completa el siguiente formulario con atención y precisión. Asegúrate de que todos los datos proporcionados sean correctos antes de enviarlos.</span>
     </v-container>
     <div class="gold-bandx">
+        
         <v-container>
+            <v-row class="pt-5 pb-10">
+                <v-col cols="12" class="text-center" style="background-color: #f2f2f2; border-radius: 25px; padding: 10px;">
+                    <span class="caption" style="font-weight: bold; font-size: 20px;">REGISTRO DE PACIENTE</span>
+                </v-col>
+            </v-row>
   <v-row align="end">
     <!-- Placeholder for the photograph, spanning vertically across 3 rows -->
     <v-col cols="5" class="mb-2">
     <v-row align="end">
         <v-col cols="12" class="mb-2">
       <!-- Display uploaded image or placeholder -->
-      <v-img 
-        :src="uploadedImage || logoCirculo" 
+    <v-img 
+        :src="uploadedImage || logoUpload" 
         class="responsive-img" 
-        @click="triggerFileInput">
-      </v-img>
+        @click="triggerFileInput"
+        style="object-fit: contain; max-height: 250px; min-height: 250px;">
+    </v-img>
     </v-col>
     <v-col cols="12" class="pb-1">
       <!-- File input for uploading image -->
@@ -48,55 +55,62 @@
     <!-- Name field aligned next to the photograph -->
     <v-col cols="7">
         <v-row>
-        <v-col cols="12" class="pl-3">
-        <v-text-field label="Nombre completo"></v-text-field>
-        </v-col>
-        <v-col cols="4" class="pl-3">
-            <v-text-field
-                label="Edad"
-                type="number"
-                :rules="[v => (v >= 0 && v <= 110) || 'Edad debe ser entre 0 y 110']"
-            ></v-text-field>
-            </v-col>
-        <v-col cols="4" class="pl-3">
-        <v-select label="Tipo de Sangre" :items="bloodTypes"></v-select>
-        </v-col>
-        <v-col cols="4" class="pl-3">
-        <v-text-field label="Fecha de nacimiento" v-model="date" type="date" :rules="[dateRule]"></v-text-field>
-        </v-col>
-        <v-col cols="6" class="pl-3">
-            <v-text-field label="Correo Electrónico" :rules="[emailRule]"></v-text-field>
-        </v-col>
-        <v-col cols="6" class="pl-3">
-            <v-text-field label="Teléfono" type="number" :rules="[phoneRule]"></v-text-field>
-        </v-col>
-        <v-col class="pl-3">
-            <v-text-field label="Dirección"></v-text-field>
-        </v-col>
+          <v-col cols="12" class="pl-3">
+            <v-text-field v-model="name" label="Nombre completo"></v-text-field>
+          </v-col>
+          <v-col cols="4" class="pl-3">
+            <v-text-field v-model="age" label="Edad" type="number"></v-text-field>
+          </v-col>
+          <v-col cols="4" class="pl-3">
+            <v-select v-model="bloodType" label="Tipo de Sangre" :items="bloodTypes"></v-select>
+          </v-col>
+          <v-col cols="4" class="pl-3">
+            <v-text-field v-model="birthDate" label="Fecha de nacimiento" type="date"></v-text-field>
+          </v-col>
+          <v-col cols="6" class="pl-3">
+            <v-text-field v-model="email" label="Correo Electrónico"></v-text-field>
+          </v-col>
+          <v-col cols="6" class="pl-3">
+            <v-text-field v-model="phone" label="Teléfono" type="number"></v-text-field>
+          </v-col>
+          <v-col class="pl-3">
+            <v-text-field v-model="address" label="Dirección"></v-text-field>
+          </v-col>
         </v-row>
     </v-col>
     </v-row>
-
-
   <v-row>
-    <!-- Address field spanning across most of the row -->
-
-    <!-- Insurance fields occupying the remaining space in the same row -->
-
     <v-col cols="5">
-      <v-select label="Tipo de seguro" :items="insuranceTypes"></v-select>
-    </v-col>
-    <v-col cols="7">
-      <v-select label="Aseguradora" :items="insuranceCompanies"></v-select>
-    </v-col>
+            <v-select v-model="insuranceType" label="Tipo de seguro" :items="insuranceTypes"></v-select>
+        </v-col>
+        <v-col cols="7">
+            <v-select v-model="insuranceCompany" label="Aseguradora" :items="insuranceCompanies"></v-select>
+        </v-col>
   </v-row>
+  <v-row class="pt-5 pb-5 text-center d-flex justify-center">
+        <v-col cols="4" class="pa-5" style="background-color: #f2f2f2; border-radius: 25px; padding: 10px;" @click="submitForm">
+            <span class="caption" style="font-weight: bold; font-size: 20px;">Guardar Información</span>
+        </v-col>
+    </v-row>
 </v-container>
-      <!-- Title -->
-
-    <!-- Patient photo upload section -->
-    
   </div>
 
+  <v-container class="align-center pt-10 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
+        <span style="font-weight: bold;">¿Por Qué Recopilamos Esta Información?<br></span>
+        <span style="font-size: 0.8em">La información que nos proporciones será utilizada exclusivamente para fines médicos y administrativos dentro del Hospital Andalucía. Esto nos permite ofrecerte una atención más eficiente y adecuada a tus necesidades de salud.</span>
+    </v-container>
+    <v-container class="align-center pt-10 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
+        <span style="font-weight: bold;">Confidencialidad y Seguridad<br></span>
+        <span style="font-size: 0.8em">Tu privacidad es nuestra prioridad. Todos los datos recopilados en este formulario están protegidos y serán tratados con la máxima confidencialidad, de acuerdo con las leyes y normativas de protección de datos.</span>
+    </v-container>
+
+    <v-container class="align-center pt-10 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
+        <span style="font-weight: bold;">¿Tienes Dudas o Preguntas?<br></span>
+        <span style="font-size: 0.8em">Si tienes alguna duda acerca del proceso de registro o necesitas asistencia adicional, no dudes en contactarnos. Puedes encontrar nuestros datos de contacto en la sección correspondiente de nuestra página web.</span>
+    </v-container>
+    <v-container class="align-center text-center pt-10 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
+        <span style="font-weight: bold;">¡Agradecemos tu confianza en el Hospital Andalucía!<br>Estamos aquí para apoyarte en tu camino hacia una mejor salud.</span>
+    </v-container>
 
 <v-container fluid>
     <v-row justify="center">
@@ -120,31 +134,27 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import ImgCirculo from '@/assets/images/logocirculo.png';
 import ImgHospital from '@/assets/images/logohospital.png';
+import uploadlogo from '@/assets/images/uploadlogo.png'
 
 export default {
     data() {
         return {
-            menu: false,
-            date: null,
-            dateRule: (v: string) => {
-        if (!v) return "Fecha de nacimiento es requerida";
-        const selectedDate = new Date(v);
-        const minDate = new Date('1900-01-01');
-        const maxDate = new Date();
-        if (selectedDate < minDate || selectedDate > maxDate) {
-          return 'Fecha de nacimiento debe ser después de 1900 y antes de hoy';
-        }
-        return true;},
             logoCirculo: ImgCirculo,
             logoHospital: ImgHospital,
+            logoUpload: uploadlogo,
             uploadedImage: null as string | null,
-            emailRule: (v: string) => /.+@.+\..+/.test(v) || 'Correo electrónico debe ser válido',
-            phoneRule: v => (/^\d{10}$/.test(v) || 'Teléfono debe ser un número de 10 dígitos'),
-            ages: [...Array(100).keys()].map((i) => i + 1),
             bloodTypes: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
             insuranceCompanies: ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK"],
-            insuranceTypes: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
-
+            insuranceTypes: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
+            name: '',
+            age: null,
+            bloodType: '',
+            birthDate: null,
+            email: '',
+            phone: null,
+            address: '',
+            insuranceType: '',
+            insuranceCompany: '',
         };
     },
     setup() {
@@ -173,6 +183,29 @@ export default {
             const inputElement = this.$refs.fileInput as HTMLInputElement;
             inputElement.click();
         },
+        submitForm() {
+        const formData = {
+          name: this.name,
+          age: this.age,
+          bloodType: this.bloodType,
+          birthDate: this.birthDate,
+          email: this.email,
+          phone: this.phone,
+          address: this.address,
+          insuranceType: this.insuranceType,
+          insuranceCompany: this.insuranceCompany,
+        };
+        console.log('Submitting form', formData);
+        axios.post('api/form', formData)
+            .then(response => {
+                // Handle success
+                console.log('Form submitted successfully', response);
+            })
+            .catch(error => {
+                // Handle error
+                console.error('Error submitting form', error);
+            });
+    },
     handleFileUpload(event: Event) {
         const file = (event.target as HTMLInputElement).files?.[0];
             if (file && file.type.startsWith('image/')) {
@@ -188,14 +221,14 @@ export default {
 </script>
 
 <style scoped>
-.v-messages__message {
-  color: #2210cc !important;
+.inputfield >>> .error--text {
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 .gold-bandx .white-input input {
   background-color: white !important;
 }
 .gold-band {
-  background-color: #D4AF37; /* Golden color */
+  background-color: #d4af3762; /* Golden color */
 }
 
 .display-1 {
@@ -203,8 +236,8 @@ export default {
   color: #000; /* Black color for text */
 }
 .gold-bandx {
-    background-color: #b68d2cba;
-    height: 600px;
+    background-color:  #b68d2c5d;
+    height: 800px;
     width: 90%;
     display: flex;
     justify-content: center;
