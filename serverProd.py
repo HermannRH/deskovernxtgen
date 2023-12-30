@@ -17,6 +17,7 @@ import csv
 import base64
 import random
 
+
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
@@ -27,6 +28,7 @@ app.secret_key = env.get("APP_SECRET_KEY")
 CORS(app)
 
 uidirectory = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'dist')
+
 
 
 def save_image(base64_string, name_prefix):
@@ -46,6 +48,7 @@ def save_image(base64_string, name_prefix):
         f.write(base64.b64decode(base64_str))
         
     return filename
+
 
 @app.before_request
 def before_request():
@@ -67,7 +70,9 @@ def before_request():
         with open('users.csv', 'a', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=['ngrok_email', 'ngrok_name', 'new'])
             writer.writerow({'ngrok_email': user_email, 'ngrok_name': user_name, 'new': True})
-        
+
+
+
 @app.route('/api/form', methods=['POST'])
 def handle_form():
     form_data = request.json
