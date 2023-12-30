@@ -12,7 +12,6 @@ import ast
 import re
 import logging
 from logging.handlers import RotatingFileHandler
-import psycopg2
 import csv
 import base64
 import random

@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Informacion",
+        "status": "completed",
+        "text": "Introducción"
+    },
+    {
+        "name": "InformacionProyecto",
+        "status": "pending",
+        "text": "Descripción"
+    },
+    {
+        "name": "Actividades",
+        "status": "completed",
+        "text": "Implementación"
+    },
+    {
+        "name": "Gantt",
+        "status": "pending",
+        "text": "Cronograma"
+    },
+    {
+        "name": "Financiera",
+        "status": "completed",
+        "text": "Finanzas"
+    },
+    {
+        "name": "Seguimiento",
+        "status": "pending",
+        "text": "Evaluación"
+    },
+    {
+        "name": "Comunicacion",
+        "status": "completed",
+        "text": "Comunicación"
+    },
+    {
+        "name": "Evidencias",
+        "status": "pending",
+        "text": "Evidencias"
+    }
+]

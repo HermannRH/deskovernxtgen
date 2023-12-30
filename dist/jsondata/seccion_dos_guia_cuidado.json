@@ -1,0 +1,172 @@
+{
+    "SeccionSistema": [
+        {
+            "title": "Nombre corto proyecto (ID)",
+            "type": "text",
+            "value": "<valor>"
+        },
+        {
+            "title": "Fecha de llenado de la guía",
+            "type": "date",
+            "value": "<valor>"
+        }
+    ],
+    "SeccionInformacionProyecto": [
+        {
+            "title": "Nombre del proyecto",
+            "type": "text",
+            "value": ""
+        },
+        {
+            "title": "Nombre de la organización",
+            "type": "text",
+            "value": ""
+        },
+        {
+            "title": "Contexto del proyecto",
+            "type": "textarea",
+            "value": ""
+        },
+        {
+            "title": "Problemática que se busca abordar con el proyecto",
+            "type": "textarea",
+            "value": ""
+        },
+        {
+            "title": "Fecha de inicio del proyecto",
+            "type": "date",
+            "value": ""
+        },
+        {
+            "title": "Fecha de finalización del proyecto",
+            "type": "date",
+            "value": ""
+        },
+        {
+            "title": "Objetivos del proyecto",
+            "type": "textarea",
+            "value": ""
+        },
+        {
+            "title": "Metas númericas",
+            "type": "number",
+            "value": ""
+        }
+    ],
+    "SeccionActividades": [
+        {
+            "activities": [
+                {
+                    "activity": "Talleres a educadoras",
+                    "frequency": "4 sesiones mensuales por cada preescolar",
+                    "groups": {
+                        "Niñas y niños de 0 a 6 años": [false,0],
+                        "Cuidadores primarios": [false,0],
+                        "Agentes educativos": [true,90]
+                    },
+                    "skills": "Empatía",
+                    "learning_tools": "Manual para el facilitador"
+                }
+            ]
+        }
+    ],
+    "SeccionGantt": [
+        {
+            "gantt": "<gantt>"
+        }
+    ],
+    "SeccionFinanciera": [
+        {
+            "moneda": "MXN",
+            "inversion": [
+                {
+                    "tipo": "planeada",
+                    "total": "<suma>",
+                    "Fundacion FEMSA": "<valor>",
+                    "Socio implementador": "<valor>",
+                    "Socio 1": "<valor>",
+                    "Socio 2": "<valor>",
+                    "Socio 3": "<valor>",
+                    "...": "<valor>"
+                },
+                {
+                    "tipo": "ejecutada",
+                    "total": "<suma>",
+                    "Fundacion FEMSA": "<valor>",
+                    "Socio implementador": "<valor>",
+                    "Socio 1": "<valor>",
+                    "Socio 2": "<valor>",
+                    "Socio 3": "<valor>",
+                    "...": "<valor>"
+                }
+            ],
+            "inversion_restante": "<suma>",
+            "explicacion": "<texto explicativo de la inversión>"
+        }
+    ],
+    "SeccionSeguimiento": [
+        {
+            "title": "Avances y logros",
+            "type": "textarea",
+            "value": "<valor>"
+        },
+        {
+            "title": "Próximos pasos Niñas y niños",
+            "type": "textarea",
+            "value": "<valor>"
+        },
+        {
+            "title": "Próximos pasos Cuidadores primarios",
+            "type": "textarea",
+            "value": "<valor>"
+        },
+        {
+            "title": "Próximos pasos Agentes educativos",
+            "type": "textarea",
+            "value": "<valor>"
+        },
+        {
+            "title": "Retos",
+            "type": "textarea",
+            "value": "<valor>"
+        },
+        {
+            "title": "Ajustes",
+            "type": "textarea",
+            "value": "<valor>"
+        },
+        {
+            "title": "Lecciones aprendidas",
+            "type": "textarea",
+            "value": "<valor>"
+        }
+    ],
+    "SeccionAccionesComunicacion": [
+        {
+            "title": "Checkbox Field",
+            "type": "checkbox",
+            "items": ["Option 1", "Option 2", "Option 3"],
+            "value": ["Option 1", "Option 3"]
+        },
+        {
+            "comunicacion": [
+                {
+                    "accion": "<accion>",
+                    "enlace": "<enlace>"
+                },
+                {
+                    "accion": "<accion>",
+                    "enlace": "<enlace>"
+                }
+            ]
+        }
+    ],
+    "SeccionEvidencias": [
+        {
+            "title": "Evidencias",
+            "type": "textarea",
+            "value": "<valor>"
+        }
+    ]
+}
+
