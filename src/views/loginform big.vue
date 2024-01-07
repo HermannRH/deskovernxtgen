@@ -12,109 +12,109 @@
             </v-row>
         </v-container>
     </div>
-    <v-container class="align-center text-center username pt-0 pb-5" style="font-size: 1em; padding-top: 80px; text-align: justify;">
+    <v-container class="align-center text-center username pt-0 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
         <span>¡Bienvenid@ al formulario de registro de pacientes del Hospital Andalucía!</span>
     </v-container>
-    <v-container class="align-center pt-0 pb-5" style="font-size: 1em; padding-top: 80px; text-align: justify;">
+    <v-container class="align-center pt-0 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
         <span style="font-size: 0.8em">Estamos comprometidos en brindarte una atención de calidad y personalizada. Para comenzar tu proceso de registro, por favor, completa el siguiente formulario con atención y precisión. Asegúrate de que todos los datos proporcionados sean correctos antes de enviarlos.</span>
     </v-container>
     <div class="gold-bandx">
         
         <v-container>
-            <v-row class="pt-5 pb-5 pl-5 pr-5">
+            <v-row class="pt-5 pb-10">
                 <v-col cols="12" class="text-center" style="background-color: #f2f2f2; border-radius: 25px; padding: 10px;">
-                    <span class="caption" style="font-weight: bold; font-size: 15px;">REGISTRO DE PACIENTE</span>
+                    <span class="caption" style="font-weight: bold; font-size: 20px;">REGISTRO DE PACIENTE</span>
                 </v-col>
             </v-row>
-  <v-row align="end" >
-    <v-col cols="5" class="mb-0">
+  <v-row align="end">
+    <!-- Placeholder for the photograph, spanning vertically across 3 rows -->
+    <v-col cols="5" class="mb-2">
     <v-row align="end">
-        <v-col cols="12" class="mb-0">
+        <v-col cols="12" class="mb-2">
+      <!-- Display uploaded image or placeholder -->
     <v-img 
         :src="uploadedImage || logoUpload" 
         class="responsive-img" 
         @click="triggerFileInput"
-        style="object-fit: contain; max-height: 130px; min-height: 130px;">
+        style="object-fit: contain; max-height: 250px; min-height: 250px;">
     </v-img>
     </v-col>
-    <v-col cols="12" class="pa-2" style="font-size: 0.3em;">
+    <v-col cols="12" class="pb-1">
       <!-- File input for uploading image -->
       <v-file-input 
         ref="fileInput" 
-        label="Fotografía" 
+        label="Fotografía del paciente" 
         prepend-icon="mdi-camera" 
-        hide-details="auto" density="compact" variant="underlined"
         accept=".jpg, .jpeg, .png"
-        @change="handleFileUpload"
-        >
+        @change="handleFileUpload">
       </v-file-input>
     </v-col>
     </v-row>
     </v-col>
 
     <!-- Name field aligned next to the photograph -->
-    <v-col cols="7" >
+    <v-col cols="7">
         <v-row>
-          <v-col cols="12" class="pa-2">
-            <v-text-field hide-details="auto" variant="underlined" v-model="name" label="Nombre completo"></v-text-field>
+          <v-col cols="12" class="pl-3">
+            <v-text-field v-model="name" label="Nombre completo"></v-text-field>
           </v-col>
-          <v-col cols="5" class="pa-2">
-            <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="age" label="Edad" type="number"></v-text-field>
+          <v-col cols="4" class="pl-3">
+            <v-text-field v-model="age" label="Edad" type="number"></v-text-field>
           </v-col>
-          <v-col cols="7" class="pa-2">
-            <v-select hide-details="auto" density="compact" variant="underlined" v-model="bloodType" label="Tipo de Sangre" :items="bloodTypes"></v-select>
+          <v-col cols="4" class="pl-3">
+            <v-select v-model="bloodType" label="Tipo de Sangre" :items="bloodTypes"></v-select>
           </v-col>
-          <v-col cols="12" class="pa-2">
-            <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="birthDate" label="Fecha de nacimiento" type="date"></v-text-field>
+          <v-col cols="4" class="pl-3">
+            <v-text-field v-model="birthDate" label="Fecha de nacimiento" type="date"></v-text-field>
           </v-col>
-          <v-col cols="12" class="pa-2">
-            <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="email" label="Correo Electrónico"></v-text-field>
+          <v-col cols="6" class="pl-3">
+            <v-text-field v-model="email" label="Correo Electrónico"></v-text-field>
+          </v-col>
+          <v-col cols="6" class="pl-3">
+            <v-text-field v-model="phone" label="Teléfono" type="number"></v-text-field>
+          </v-col>
+          <v-col class="pl-3">
+            <v-text-field v-model="address" label="Dirección"></v-text-field>
           </v-col>
         </v-row>
     </v-col>
     </v-row>
   <v-row>
-          <v-col cols="8" class="pa-2">
-            <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="address" label="Dirección"></v-text-field>
-          </v-col>
-          <v-col cols="4" class="pa-2">
-            <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="phone" label="Teléfono" type="number"></v-text-field>
-          </v-col>
-    <v-col cols="5" class="pa-2">
-            <v-select v-model="insuranceType" hide-details="auto" density="compact" variant="underlined" label="Tipo de seguro" :items="insuranceTypes"></v-select>
+    <v-col cols="5">
+            <v-select v-model="insuranceType" label="Tipo de seguro" :items="insuranceTypes"></v-select>
         </v-col>
-        <v-col cols="7" class="pa-2">
-            <v-select v-model="insuranceCompany" hide-details="auto" density="compact" variant="underlined" label="Aseguradora" :items="insuranceCompanies"></v-select>
+        <v-col cols="7">
+            <v-select v-model="insuranceCompany" label="Aseguradora" :items="insuranceCompanies"></v-select>
         </v-col>
-        <v-col cols="12" class="pa-2">
-          <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="cardNumber" label="Agrega aquí el número de tu tarjeta"></v-text-field>
+        <v-col cols="12" class="pb-0">
+          <v-text-field v-model="cardNumber" label="Agrega aquí el número de tu tarjeta"></v-text-field>
         </v-col>
-        <v-col cols="12" class="pa-2">
+        <v-col cols="12" class="pt-0">
           <v-checkbox v-model="termsAccepted" label="¿Aceptas los términos y condiciones?"></v-checkbox>
         </v-col>
   </v-row>
-  <v-row class="text-center d-flex justify-center">
-        <v-col cols="6" class="pa-5" style="background-color: #f2f2f2; border-radius: 25px; padding: 10px;" @click="submitForm">
-            <span class="caption" style="font-weight: bold; font-size: 1em;">Guardar Información</span>
+  <v-row class="pt-5 pb-5 text-center d-flex justify-center">
+        <v-col cols="4" class="pa-5" style="background-color: #f2f2f2; border-radius: 25px; padding: 10px;" @click="submitForm">
+            <span class="caption" style="font-weight: bold; font-size: 20px;">Guardar Información</span>
         </v-col>
     </v-row>
 </v-container>
   </div>
 
-  <v-container class="align-center pt-10 pb-5" style="font-size: 1em;  text-align: justify;">
+  <v-container class="align-center pt-10 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
         <span style="font-weight: bold;">¿Por Qué Recopilamos Esta Información?<br></span>
         <span style="font-size: 0.8em">La información que nos proporciones será utilizada exclusivamente para fines médicos y administrativos dentro del Hospital Andalucía. Esto nos permite ofrecerte una atención más eficiente y adecuada a tus necesidades de salud.</span>
     </v-container>
-    <v-container class="align-center pt-10 pb-5" style="font-size: 1em;  text-align: justify;">
+    <v-container class="align-center pt-10 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
         <span style="font-weight: bold;">Confidencialidad y Seguridad<br></span>
         <span style="font-size: 0.8em">Tu privacidad es nuestra prioridad. Todos los datos recopilados en este formulario están protegidos y serán tratados con la máxima confidencialidad, de acuerdo con las leyes y normativas de protección de datos.</span>
     </v-container>
 
-    <v-container class="align-center pt-10 pb-5" style="font-size: 1em;  text-align: justify;">
+    <v-container class="align-center pt-10 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
         <span style="font-weight: bold;">¿Tienes Dudas o Preguntas?<br></span>
         <span style="font-size: 0.8em">Si tienes alguna duda acerca del proceso de registro o necesitas asistencia adicional, no dudes en contactarnos. Puedes encontrar nuestros datos de contacto en la sección correspondiente de nuestra página web.</span>
     </v-container>
-    <v-container class="align-center text-center pt-10 pb-5" style="font-size: 1em;  text-align: justify;">
+    <v-container class="align-center text-center pt-10 pb-5" style="font-size: 2em; padding-top: 80px; text-align: justify;">
         <span style="font-weight: bold;">¡Agradecemos tu confianza en el Hospital Andalucía!<br>Estamos aquí para apoyarte en tu camino hacia una mejor salud.</span>
     </v-container>
 
@@ -148,20 +148,18 @@
 </template>
 
 <style scoped>
-:deep().font-small {
-  font-size: 1em !important;
-}
 .gold-bandx .white-input input {
   background-color: white !important;
 }
 .gold-bandx {
     background-color:  #b68d2c5d;
-    height: 650px;
-    width: 100%;
+    height: 950px;
+    width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    border-radius: 50px;
+    margin: auto;
     overflow: auto;
 }
 .username {

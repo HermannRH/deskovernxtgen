@@ -98,10 +98,22 @@
 
 <v-container fluid>
     <v-row justify="center">
+      <v-col class="align-center text-center pt-10 pb-5" style="font-size: 1.3em; padding-top: 80px; text-align: justify;">
+        <span>¡Síguenos en nuestras redes sociales!</span>
+      </v-col>
+      <v-col cols="12" class="text-center">
+      <v-btn class="custom-button" size="x-large" variant="plain" href="https://fb.com/company123">
+        <v-icon left>mdi-facebook</v-icon> Facebook
+      </v-btn>
+      <!-- Add Instagram Button -->
+      <v-btn class="custom-button" size="x-large" variant="plain" href="https://instagram.com/company123">
+        <v-icon left>mdi-instagram</v-icon> Instagram
+      </v-btn>
+    </v-col>
       <v-col cols="12" class="text-center" >
-        <v-btn variant="plain" text class="username">Términos y condiciones</v-btn>
-        <v-btn variant="plain" text class="username">Preguntas frecuentes</v-btn>
-        <v-btn variant="plain" text class="username">Contáctanos</v-btn>
+        <v-btn variant="plain" class="username">Términos y condiciones</v-btn>
+        <v-btn variant="plain" class="username">Preguntas frecuentes</v-btn>
+        <v-btn variant="plain" class="username">Contáctanos</v-btn>
       </v-col>
     </v-row>
     <v-row justify="center">
@@ -110,7 +122,6 @@
       </v-col>
     </v-row>
   </v-container>
-
 </template>
 
 <script>
