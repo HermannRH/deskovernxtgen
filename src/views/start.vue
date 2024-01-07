@@ -235,7 +235,7 @@ export default {
           }
         }
       } catch (error) {
-        //router.push('/login');
+        router.push('/login');
       }
     };
 
