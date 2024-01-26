@@ -12,14 +12,17 @@
             </v-row>
         </v-container>
     </div>
+
     <v-container class="align-center text-center username pt-0 pb-5" style="font-size: 1em; padding-top: 80px; text-align: justify;">
         <span>¡Bienvenid@ al formulario de registro de pacientes del Hospital Andalucía!</span>
     </v-container>
     <v-container class="align-center pt-0 pb-5" style="font-size: 1em; padding-top: 80px; text-align: justify;">
         <span style="font-size: 0.8em">Estamos comprometidos en brindarte una atención de calidad y personalizada. Para comenzar tu proceso de registro, por favor, completa el siguiente formulario con atención y precisión. Asegúrate de que todos los datos proporcionados sean correctos antes de enviarlos.</span>
     </v-container>
+
+
+    
     <div class="gold-bandx">
-        
         <v-container>
             <v-row class="pt-5 pb-5 pl-5 pr-5">
                 <v-col cols="12" class="text-center" style="background-color: #f2f2f2; border-radius: 25px; padding: 10px;">
@@ -80,12 +83,22 @@
           <v-col cols="4" class="pa-2">
             <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="phone" label="Teléfono" type="number"></v-text-field>
           </v-col>
-    <v-col cols="5" class="pa-2">
-            <v-select v-model="insuranceType" hide-details="auto" density="compact" variant="underlined" label="Tipo de seguro" :items="insuranceTypes"></v-select>
+    <v-col cols="12" class="pa-2">
+            <v-text-field v-model="company" hide-details="auto" density="compact" variant="underlined" label="Empresa en la que laboras"></v-text-field>
         </v-col>
-        <v-col cols="7" class="pa-2">
-            <v-select v-model="insuranceCompany" hide-details="auto" density="compact" variant="underlined" label="Aseguradora" :items="insuranceCompanies"></v-select>
+
+        <v-row class="pa-3">
+        <v-col cols="12" class="pa-2">
+          <v-select v-model="hasMajorMedicalInsurance" hide-details="auto" density="compact" variant="underlined" label="¿Tienes Seguro de Gastos Médicos Mayores?" :items="['Sí', 'No']"></v-select>
         </v-col>
+        <v-col cols="12" class="pa-2">
+          <v-select v-if="hasMajorMedicalInsurance === 'Sí'" v-model="insuranceCompany" hide-details="auto" density="compact" variant="underlined" label="Aseguradora" :items="insuranceCompanies"></v-select>
+        </v-col>
+        <v-col cols="12" class="pa-2">
+          <v-text-field  v-if="hasMajorMedicalInsuranceOtros></v-text-field>
+        </v-col>
+        </v-row>
+
         <v-col cols="12" class="pa-2">
           <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="cardNumber" label="Agrega aquí el número de tu tarjeta"></v-text-field>
         </v-col>
@@ -101,6 +114,8 @@
 </v-container>
   </div>
 
+
+  
   <v-container class="align-center pt-10 pb-5" style="font-size: 1em;  text-align: justify;">
         <span style="font-weight: bold;">¿Por Qué Recopilamos Esta Información?<br></span>
         <span style="font-size: 0.8em">La información que nos proporciones será utilizada exclusivamente para fines médicos y administrativos dentro del Hospital Andalucía. Esto nos permite ofrecerte una atención más eficiente y adecuada a tus necesidades de salud.</span>
@@ -205,7 +220,8 @@ export default {
             uploadedImage: null as string | null,
             bloodTypes: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
             insuranceCompanies: ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK"],
-            insuranceTypes: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
+            company: "",
+            hasMajorMedicalInsurance: "",
             name: '',
             age: null as number | null,
             bloodType: '',
@@ -262,8 +278,8 @@ export default {
         if (!this.address) {
           errors.push("La dirección es obligatoria.");
         }
-        if (!this.insuranceType) {
-          errors.push("El tipo de seguro es obligatorio.");
+        if (!this.company) {
+          errors.push("Ingresa de que empresa formas parte.");
         }
         if (!this.insuranceCompany) {
           errors.push("La compañía de seguros es obligatoria.");
@@ -277,6 +293,9 @@ export default {
         }
         if (!this.cardNumber) {
           errors.push("El número de tarjeta es obligatorio");
+        }
+        if (!this.hasMajorMedicalInsurance) {
+          errors.push("Debes indicar si tienes seguro de gastos médicos mayores");
         }
         return errors;
       },

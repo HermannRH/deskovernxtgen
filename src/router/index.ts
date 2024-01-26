@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Dashboard from '@/views/start.vue';
 import LoginForm from '@/views/loginform.vue';
 
 export const router = createRouter({
@@ -7,10 +6,6 @@ export const router = createRouter({
   routes: [
     {
       path: '/',
-      component: Dashboard,
-    },
-    {
-      path: '/login',
       component: LoginForm,
     },
     {
