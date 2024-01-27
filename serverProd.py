@@ -112,8 +112,7 @@ def handle_form():
 
 @app.route('/api/info')
 def get_info():
-    ngrok_email = request.headers.get('Ngrok-Auth-User-Email')
-    ngrok_name = request.headers.get('Ngrok-Auth-User-Name')
+    idCard = request.args.get('idCard')
     # Check the user csv for the email, and retrieve the column "new" if it is true send back a "new" flag, if not return the id column on the csv
     with open('users.csv', 'r') as file:
         reader = csv.DictReader(file)
