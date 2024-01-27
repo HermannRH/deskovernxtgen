@@ -323,14 +323,11 @@ export default {
           }
   },
   async getInfo() {
-    try {
-      // Wait for 10 seconds
-      await new Promise(resolve => setTimeout(resolve, 10000));
-
-      // Do nothing
-    } catch (error) {
-      console.error(error);
-    }
+      // Wait for 2 seconds before doing the request
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Simulate a successful request abd return a listA
+      this.listA = 'A';
+      this.checkListAUpdated();
   },
   validateFolio() {
       this.validationError = '';
