@@ -331,7 +331,6 @@ export default {
     } catch (error) {
       console.error(error);
     }
-  }
   },
   validateFolio() {
       this.validationError = '';
@@ -354,8 +353,7 @@ export default {
         this.dialog = false;
       }
     }
-}
-};
+} };
 </script>
 
 <style scoped>
