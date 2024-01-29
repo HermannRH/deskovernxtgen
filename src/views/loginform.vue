@@ -81,13 +81,19 @@
           <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="phone" label="Teléfono" type="number"></v-text-field>
         </v-col>
   <v-col cols="5" class="pa-2">
-          <v-select v-model="insuranceType" hide-details="auto" density="compact" variant="underlined" label="Tipo de seguro" :items="insuranceTypes"></v-select>
+    <v-select v-model="insuranceType" hide-details="auto" density="compact" variant="underlined" label="Tipo de seguro" :items="insuranceTypes"></v-select>
+  </v-col>
+  <v-col cols="7" class="pa-2">
+    <v-select v-model="insuranceCompany" hide-details="auto" density="compact" variant="underlined" label="Aseguradora" :items="insuranceCompanies"></v-select>
+  </v-col>
+      <v-col cols="12" class="pa-2" v-if="insuranceType === 'Otro'">
+        <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="otherInsuranceType" label="Indica cuál es el tipo de seguro que tienes"></v-text-field>
       </v-col>
-      <v-col cols="7" class="pa-2">
-          <v-select v-model="insuranceCompany" hide-details="auto" density="compact" variant="underlined" label="Aseguradora" :items="insuranceCompanies"></v-select>
+      <v-col cols="12" class="pa-2" v-if="insuranceCompany === 'Otra'">
+        <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="otherInsuranceCompany" label="Indica cuál el nombre de tu aseguradora"></v-text-field>
       </v-col>
       <v-col cols="12" class="pa-2">
-        <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="cardNumber" label="Agrega aquí el número de tu tarjeta"></v-text-field>
+        <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="folioTarjeta" label="Agrega aquí el número de Folio de tu tarjeta" type="number"></v-text-field>
       </v-col>
       <v-col cols="12" class="pa-2">
         <v-checkbox v-model="termsAccepted" label="¿Aceptas los términos y condiciones?"></v-checkbox>
@@ -124,11 +130,11 @@
       <span>¡Síguenos en nuestras redes sociales!</span>
     </v-col>
     <v-col cols="12" class="text-center">
-    <v-btn class="custom-button" size="x-large" variant="plain" href="https://fb.com/company123">
+    <v-btn class="custom-button" size="x-large" variant="plain" href="https://www.facebook.com/HospitalAndaluciaMx">
       <v-icon left>mdi-facebook</v-icon> Facebook
     </v-btn>
     <!-- Add Instagram Button -->
-    <v-btn class="custom-button" size="x-large" variant="plain" href="https://instagram.com/company123">
+    <v-btn class="custom-button" size="x-large" variant="plain" href="https://www.instagram.com/hospital_andalucia_mx/">
       <v-icon left>mdi-instagram</v-icon> Instagram
     </v-btn>
   </v-col><!--
@@ -151,9 +157,8 @@
       <v-card-text v-if="!loading">
         Ingresa el Folio de tu Tarjeta para continuar.
         <v-text-field
-          v-model="folioNumber"
+          v-model="folioCheckInicial"
           label="Folio de Tarjeta"
-          type="number"
           :rules="folioRules"
         ></v-text-field>
         <span v-if="validationError">{{ validationError }}</span>
@@ -169,50 +174,108 @@
     </v-card>
   </v-dialog>
 
-<v-dialog>
-  <v-card>
-    <v-card-title class="headline">Sample Success</v-card-title>
-    <v-card-text>
-      This is a sample text inside the modal.
-    </v-card-text>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-        <v-btn color="green darken-1" @click="dialogSuccess = false">Close</v-btn>
-    </v-card-actions>
+  <v-dialog v-model="dialogSuccess" persistent max-width="500px">
+  <v-card class="pa-5">
+    <v-container>
+      <v-row>
+        <v-col class="d-flex justify-center">
+          <v-img :src="checkIcon"></v-img>
+      </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="d-flex justify-center">
+          <v-card-title class="headline text-center">¡Todo Listo!</v-card-title>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-card-text class="text-center">
+            <span>¡Felicidades {{ name }}! <br>
+            Tus datos fueron registrados correctamente. <br>
+            Pronto recibirás acceso a beneficios exclusivos <br><br>
+            Ya no es necesario hacer nada más. <br></span>
+          </v-card-text>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="d-flex justify-center">
+          <v-btn color="green darken-1" @click="redirectEnd">Cerrar</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-card>
 </v-dialog>
 
+<v-dialog v-model="dialogAdmin" persistent max-width="500px">
+  <v-card class="pa-5">
+    <v-container>
+      <v-row>
+        <v-col class="d-flex justify-center">
+          <v-img :src="adminIcon"></v-img>
+      </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="d-flex justify-center">
+          <v-card-title class="headline text-center">Descarga de Información</v-card-title>
+        </v-col>
+        <v-col cols="12" class="pa-2">
+          <v-text-field hide-details="auto" v-model="emailAdmin" label="Correo" type="email" required></v-text-field>
+        </v-col>
+        <v-col cols="12" class="pa-2">
+          <v-text-field hide-details="auto" v-model="passwordAdmin" label="Credencial" type="password" required></v-text-field>
+        </v-col>
+        <v-col cols="12" class="pa-2">
+          <v-checkbox  hide-details="auto" v-model="downloadUserData" label="Accept User Data"></v-checkbox>
+        </v-col>
+        <v-col cols="12" class="pa-2">
+          <v-checkbox  hide-details="auto" v-model="downloadImages" label="Accept Images"></v-checkbox>
+        </v-col>
+        <v-col class="d-flex justify-center">
+          <v-btn color="primary" @click="submitAdmin">
+            Enviar Consulta
+            <v-icon class="pl-3" left>mdi-send</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-card>
+</v-dialog>
 
 </template>
 <script lang="ts">
-import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import ImgCirculo from '@/assets/images/logocirculo.png';
 import ImgHospital from '@/assets/images/logohospital.png';
 import uploadlogo from '@/assets/images/uploadlogo.png'
+import checkIcon from '@/assets/images/check.png'
 import { useRouter } from 'vue-router';
+import adminIcon from '@/assets/images/admin-panel.png'
 
 
 
 export default {
   data() {
       return {
-          dialog: true,
-          folioNumber: null as number | null,
+          dialog: false,
+          folioCheckInicial: null as number | null,
           loading: false,
           validationError: '',
           folioRules: [
-            (v: number) => !!v || 'El Folio es requerido',
-            (v: number) => (v > 0 && v <= 10000) || 'Este folio no funciona, contactános directamente'
+            (v: any) => !!v || 'El Folio is required',
+            (v: any) => (v === '#andalucia' || (v > 0 && v <= 10000)) || 'Este folio no funciona, contactános directamente'
           ],
           dialogSuccess: false,
           logoCirculo: ImgCirculo,
           logoHospital: ImgHospital,
           logoUpload: uploadlogo,
+          checkIcon: checkIcon,
+          dialogAdmin: true,
+          adminIcon: adminIcon,
+          imageLoaded: false,
           uploadedImage: null as string | null,
           bloodTypes: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-          insuranceCompanies: ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK"],
-          insuranceTypes: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
+          insuranceCompanies: [''],
+          insuranceTypes: [''],
           name: '',
           age: null as number | null,
           bloodType: '',
@@ -222,14 +285,25 @@ export default {
           address: '',
           insuranceType: '',
           insuranceCompany: '',
+          otherInsuranceType: '',
+          otherInsuranceCompany: '',
           termsAccepted: false,
-          cardNumber: "",
+          folioTarjeta: null as number | null,
+          admin: false,
           router : useRouter(),
-          idCard: null as number | null,
-          listA: '',
+          emailAdmin: '',
+          passwordAdmin: '',
+          downloadUserData: false,
+          downloadImages: false,
       };
   },
+  mounted() {
+      this.preloadImage();
+  },
   methods: {
+    redirectEnd() {
+      window.location.href = 'https://hospitalandalucia.com/';
+    },
     validateForm() {
       let errors = [];
       if (!this.name) {
@@ -256,18 +330,29 @@ export default {
       if (!this.insuranceType) {
         errors.push("El tipo de seguro es obligatorio.");
       }
+      if (this.insuranceType === 'Otro' && !this.otherInsuranceType) {
+        errors.push("Debes indicar el tipo de seguro.");
+      }
+      if (this.insuranceType === 'Otro') {
+        this.insuranceType = this.otherInsuranceType;
+      }
       if (!this.insuranceCompany) {
         errors.push("La compañía de seguros es obligatoria.");
       }
-
+      if (this.insuranceCompany === 'Otra' && !this.otherInsuranceCompany) {
+        errors.push("Debes indicar la compañía de seguros.");
+      }
+      if (this.insuranceCompany === 'Otra') {
+        this.insuranceCompany = this.otherInsuranceCompany;
+      }
       if (!this.uploadedImage) {
         errors.push("La imagen es obligatoria.");
       }
       if (!this.termsAccepted) {
         errors.push("Debes aceptar los términos y condiciones.");
       }
-      if (!this.cardNumber) {
-        errors.push("El número de tarjeta es obligatorio");
+      if (this.folioCheckInicial !== Number(this.folioTarjeta)) {
+        errors.push("El número de tarjeta no coincide, por favor, verifica que sea correcto y recarga la página.");
       }
       return errors;
     },
@@ -275,6 +360,14 @@ export default {
           const inputElement = this.$refs.fileInput as HTMLInputElement;
           inputElement.click();
       },
+      preloadImage() {
+      const image = new Image();
+      image.onload = () => {
+        this.imageLoaded = true; // Set to true once the image is loaded
+      };
+      image.src = this.checkIcon;
+    },
+
       submitForm() {
         const formErrors = this.validateForm();
 
@@ -295,12 +388,15 @@ export default {
         insuranceType: this.insuranceType,
         insuranceCompany: this.insuranceCompany,
         image: this.uploadedImage,
+        folioTarjeta: this.folioTarjeta,
+        folioCheckInicial: this.folioCheckInicial,
       };
       console.log('Submitting form', formData);
       axios.post('api/form', formData)
           .then(response => {
             console.log('Form submitted successfully', response);
             this.$notify({ type: 'success', title: 'Éxito', text: 'Sus datos fueron registrados correctamente.' });
+            this.dialogSuccess = true;
             setTimeout(() => {
               this.$router.push('/');
               window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -323,34 +419,76 @@ export default {
           }
   },
   async getInfo() {
-      // Wait for 2 seconds before doing the request
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      // Simulate a successful request abd return a listA
-      this.listA = 'A';
-      this.checkListAUpdated();
+    try {
+      const response = await axios.get('api/info', { params: { folioCheckInicial: this.folioCheckInicial } });
+      console.log('Response from getInfo', response);
+      this.insuranceTypes = response.data.unique_Tipo_Seguro.filter(Boolean);
+      this.insuranceCompanies = response.data.unique_Nombre_Aseguradora.filter(Boolean);
+      this.insuranceTypes.push('Otro');
+      this.insuranceCompanies.push('Otra');
+    } catch (error) {
+      console.error('Error in getInfo', error);
+    } finally {
+      this.checkUpdated();
+    }
   },
   validateFolio() {
-      this.validationError = '';
-      const isValid = this.folioRules.every(rule => rule(this.folioNumber ?? 0) === true);
+    if (this.folioCheckInicial?.toString() === '#andalucia') {
+      this.admin = true;
+      this.dialog = false;
+      return;
+    }
 
-      if (isValid) {
-        this.loading = true;
-        this.idCard = Number(this.folioNumber);
-        this.getInfo();
-      } else {
-        this.validationError = 'Este folio no funciona, contactános directamente';
-      }
-    },
-    checkListAUpdated() {
-      if (this.listA !== '') {
-        // Handle updated listA
-        this.loading = false;
-      } else {
+    this.validationError = '';
+    const isValid = this.folioRules.every(rule => rule(this.folioCheckInicial ?? 0) === true);
+
+    if (isValid) {
+      this.loading = true;
+      this.folioCheckInicial = Number(this.folioCheckInicial);
+      this.getInfo();
+    } else {
+      this.validationError = 'Este folio no funciona, contactános directamente';
+    }
+  },
+    checkUpdated() {
+      console.log('Checking ', this.insuranceTypes, this.insuranceCompanies);
+      if (this.insuranceTypes.length > 1 && this.insuranceCompanies.length > 1) {
+        console.log(this.insuranceTypes.length);
         this.loading = false;
         this.dialog = false;
+      } else {
+        this.loading = false;
+        // Show error and reload
+        this.$notify({ type: 'error', title: 'Error', text: 'Hubo un problema con el folio, porfavor recarga la página y vuelva a intentar' });
       }
-    }
-} };
+    },
+    async submitAdmin() {
+  try {
+    const response = await axios.get('api/pullmoll', {
+      params: {
+        email: this.emailAdmin, 
+        password: this.passwordAdmin, 
+        downloadUserData: this.downloadUserData, 
+        downloadImages: this.downloadImages
+      },
+      responseType: 'blob' // This is important for handling binary data
+    });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `Informacion-${Date.now()}.zip`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link); // Clean up
+  } catch (error) {
+    console.error('Error in getInfo', error);
+  } finally {
+    this.dialogAdmin = false;
+  }
+}
+
+  },
+ };
 </script>
 
 <style scoped>

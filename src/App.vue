@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <RouterView></RouterView>
-    <notifications position="bottom right" width="900" />
+    <notifications position="bottom right" width="70%" />
   </div>
 </template>
 
