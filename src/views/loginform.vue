@@ -256,7 +256,7 @@ import adminIcon from '@/assets/images/admin-panel.png'
 export default {
   data() {
       return {
-          dialog: false,
+          dialog: true,
           folioCheckInicial: null as number | null,
           loading: false,
           validationError: '',
@@ -269,7 +269,7 @@ export default {
           logoHospital: ImgHospital,
           logoUpload: uploadlogo,
           checkIcon: checkIcon,
-          dialogAdmin: true,
+          dialogAdmin: false,
           adminIcon: adminIcon,
           imageLoaded: false,
           uploadedImage: null as string | null,
@@ -289,7 +289,6 @@ export default {
           otherInsuranceCompany: '',
           termsAccepted: false,
           folioTarjeta: null as number | null,
-          admin: false,
           router : useRouter(),
           emailAdmin: '',
           passwordAdmin: '',
@@ -434,7 +433,7 @@ export default {
   },
   validateFolio() {
     if (this.folioCheckInicial?.toString() === '#andalucia') {
-      this.admin = true;
+      this.dialogAdmin = true;
       this.dialog = false;
       return;
     }
