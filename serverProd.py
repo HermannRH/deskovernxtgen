@@ -61,7 +61,7 @@ def handle_form():
 
 
     # Read the CSV file into a list of dictionaries
-    with open(csv_file_path, mode='r') as file:
+    with open(csv_file_path,encoding='latin1', mode='r') as file:
         reader = csv.DictReader(file)
         data = list(reader)
 
@@ -118,7 +118,7 @@ def handle_form():
             
             
     # Write the list back to the CSV file
-    with open(csv_file_path, mode='w', newline='') as file:
+    with open(csv_file_path, encoding='latin1', mode='w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=data[0].keys())
         writer.writeheader()
         writer.writerows(data)
@@ -133,7 +133,7 @@ def get_info():
     unique_Numero_Tarjeta = set()
 
     # Read and extract the unique values for Tipo_Seguro and Nombre_Aseguradora
-    with open(csv_file_path, mode='r') as file:
+    with open(csv_file_path, encoding='latin1', mode='r') as file:
         reader = csv.DictReader(file)
         data = list(reader)
         for row in data:
@@ -158,7 +158,7 @@ def get_info():
         })
 
     # Write the list back to the CSV file
-    with open(csv_file_path, mode='w', newline='') as file:
+    with open(csv_file_path, encoding='latin1', mode='w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=data[0].keys())
         writer.writeheader()
         writer.writerows(data)
