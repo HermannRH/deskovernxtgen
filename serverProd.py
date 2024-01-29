@@ -14,7 +14,6 @@ import base64
 import random
 from datetime import datetime, timedelta
 from flask import abort
-import bcrypt
 from flask import send_file
 import io
 import shutil
