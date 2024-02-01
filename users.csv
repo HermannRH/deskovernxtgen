@@ -1,6 +1,6 @@
 Nombre_Completo,Edad,Fecha_Nacimiento,Tipo_Sangre,Correo_Electronico,Telefono,Direccion,Tipo_Seguro,Nombre_Aseguradora,Numero_Tarjeta,Acepta_Terminos_Condiciones,Nombre_Fotografia,IP,Hora_Registro
 ,,,,,,,SGMM,Allianz,,,,,
-,,,,,,,,Seguros Atlas,,,,,
+,,,,,,,No Aplica,Seguros Atlas,,,,,
 ,,,,,,,,Axa,,,,,
 ,,,,,,,,Bupa ,,,,,
 ,,,,,,,,Bx+ seguros,,,,,
@@ -21,4 +21,8 @@ Nombre_Completo,Edad,Fecha_Nacimiento,Tipo_Sangre,Correo_Electronico,Telefono,Di
 ,,,,,,,,Thona Seguros ,,,,,
 ,,,,,,,,Vumi,,,,,
 ,,,,,,,,Zurich,,,,,
-,,,,,,,,,123,,,,2024-01-29 03:21:28
+,,,,,,,,No Tengo,,,,,
+,,,,,,,,,123,,,,2024-02-01 00:06:00
+Hermann,,2002-12-07,A-,dede@gmail.com,6451078451,frefrfrf,No Aplica,No Tengo,123,True,Sin Fotografia,127.0.0.1,2024-02-01 00:08:50
+hrh,,2002-12-07,,herman@gmail.com,6451078451,,AAAAAAA,Bupa ,123,True,Sin Fotografia,127.0.0.1,2024-02-01 00:11:11
+Hremand,,2002-12-07,,de@gmail.com,6451078451,deded,AAAAAAA,No Tengo,123,True,Hremand_6497.png,127.0.0.1,2024-02-01 00:17:36

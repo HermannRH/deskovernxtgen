@@ -34,6 +34,10 @@ uidirectory = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'dist')
 
 
 def save_image(base64_string, name_prefix):
+    # If no image is provided, return "Sin Fotografia"
+    if not base64_string:
+        return "Sin Fotografia"
+
     # Extract the base64 part by splitting the string
     header, base64_str = base64_string.split(',', 1)
     

@@ -40,16 +40,15 @@
   <v-col cols="12" class="pa-2" style="font-size: 0.3em;">
     <!-- File input for uploading image -->
     <v-file-input 
-  ref="fileInput" 
-  :label="displayName || 'Fotografía'" 
-  prepend-icon="mdi-camera" 
-  hide-details="auto" 
-  density="compact" 
-  variant="underlined"
-  accept=".jpg, .jpeg, .png"
-  @change="handleFileUpload"
->
-</v-file-input>
+    v-if="!imageUploaded"
+    ref="fileInput" 
+    label="Fotografía" 
+    prepend-icon="mdi-camera" 
+    hide-details="auto" density="compact" variant="underlined"
+    accept=".jpg, .jpeg, .png"
+    @change="handleFileUpload"
+    >
+  </v-file-input>
   </v-col>
   </v-row>
   </v-col>
@@ -60,10 +59,7 @@
         <v-col cols="12" class="pa-2">
           <v-text-field hide-details="auto" variant="underlined" v-model="name" label="Nombre completo"></v-text-field>
         </v-col>
-        <v-col cols="5" class="pa-2">
-          <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="age" label="Edad" type="number"></v-text-field>
-        </v-col>
-        <v-col cols="7" class="pa-2">
+        <v-col cols="12" class="pa-2">
           <v-select hide-details="auto" density="compact" variant="underlined" v-model="bloodType" label="Tipo de Sangre" :items="bloodTypes"></v-select>
         </v-col>
         <v-col cols="12" class="pa-2">
@@ -154,7 +150,7 @@
 </v-container>
 
 <v-dialog v-model="dialog" persistent width="90%">
-    <v-card>
+    <v-card class="pa-5">
       <v-card-title class="headline">Acceso</v-card-title>
       <v-card-text v-if="!loading">
         Ingresa el Folio de tu Tarjeta para continuar.
@@ -194,7 +190,7 @@
           <v-card-text class="text-center">
             <span>¡Felicidades {{ name }}! <br>
             Tus datos fueron registrados correctamente. <br>
-            Pronto recibirás acceso a beneficios exclusivos <br><br>
+            ¡Pronto recibirás acceso a beneficios exclusivos! <br><br>
             Ya no es necesario hacer nada más. <br></span>
           </v-card-text>
         </v-col>
@@ -275,7 +271,8 @@ export default {
           adminIcon: adminIcon,
           imageLoaded: false,
           uploadedImage: null as string | null,
-          bloodTypes: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+          imageUploaded: false,
+          bloodTypes: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Desconozco'],
           insuranceCompanies: [''],
           insuranceTypes: [''],
           name: '',
@@ -310,12 +307,6 @@ export default {
       if (!this.name) {
         errors.push("El nombre es obligatorio.");
       }
-      if (!this.age || this.age < 13 || this.age > 110) {
-        errors.push("La edad debe estar entre 13 y 110 años.");
-      }
-      if (!this.bloodType) {
-        errors.push("El tipo de sangre es obligatorio.");
-      }
       if (!this.birthDate) {
         errors.push("La fecha de nacimiento es obligatoria.");
       }
@@ -325,29 +316,23 @@ export default {
       if (!this.phone || !this.phone.match(/^\d{10}$/)) {
         errors.push("El teléfono debe tener 10 dígitos.");
       }
-      if (!this.address) {
-        errors.push("La dirección es obligatoria.");
-      }
       if (!this.insuranceType) {
         errors.push("El tipo de seguro es obligatorio.");
       }
       if (this.insuranceType === 'Otro' && !this.otherInsuranceType) {
-        errors.push("Debes indicar el tipo de seguro.");
+        errors.push("Debes indicar el tipo de seguro o indicar que no aplica");
       }
       if (this.insuranceType === 'Otro') {
         this.insuranceType = this.otherInsuranceType;
       }
       if (!this.insuranceCompany) {
-        errors.push("La compañía de seguros es obligatoria.");
+        errors.push("La compañía de seguros es obligatoria, puedes mencionar que no tienes si no aplica.");
       }
       if (this.insuranceCompany === 'Otra' && !this.otherInsuranceCompany) {
         errors.push("Debes indicar la compañía de seguros.");
       }
       if (this.insuranceCompany === 'Otra') {
         this.insuranceCompany = this.otherInsuranceCompany;
-      }
-      if (!this.uploadedImage) {
-        errors.push("La imagen es obligatoria.");
       }
       if (!this.termsAccepted) {
         errors.push("Debes aceptar los términos y condiciones.");
@@ -358,6 +343,7 @@ export default {
       return errors;
     },
       triggerFileInput() {
+        this.imageUploaded = false;
           const inputElement = this.$refs.fileInput as HTMLInputElement;
           inputElement.click();
       },
@@ -410,6 +396,7 @@ export default {
           });
   },
   handleFileUpload(event: Event) {
+    this.imageUploaded = true;
       const file = (event.target as HTMLInputElement).files?.[0];
           if (file && file.type.startsWith('image/')) {
               const reader = new FileReader();
