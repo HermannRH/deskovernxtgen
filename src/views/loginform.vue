@@ -90,6 +90,14 @@
       <v-col cols="12" class="pa-2" v-if="insuranceCompany === 'Otra'">
         <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="otherInsuranceCompany" label="Indica cuál el nombre de tu aseguradora"></v-text-field>
       </v-col>
+
+      <v-col cols="12" class="pa-2">
+        <v-select v-model="centroTrabajo" hide-details="auto" density="compact" variant="underlined" label="Centro de Trabajo" :items="centrosTrabajo"></v-select>
+      </v-col>
+      <v-col cols="12" class="pa-2" v-if="centroTrabajo === 'Otro'">
+        <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="otherCentroTrabajo" label="Indica cuál el nombre de tu Centro de Trabajo"></v-text-field>
+      </v-col>
+
       <v-col cols="12" class="pa-2">
         <v-text-field hide-details="auto" density="compact" variant="underlined" v-model="folioTarjeta" label="Agrega aquí el número de Folio de tu tarjeta" type="number"></v-text-field>
       </v-col>
@@ -97,7 +105,7 @@
         <v-checkbox v-model="termsAccepted" label="¿Aceptas los términos y condiciones?"></v-checkbox>
       </v-col>
 </v-row>
-<v-row class="text-center d-flex justify-center">
+<v-row class="text-center d-flex justify-center pb-5">
       <v-col cols="6" class="pa-5" style="background-color: #f2f2f2; border-radius: 25px; padding: 10px;" @click="submitForm">
           <span class="caption" style="font-weight: bold; font-size: 1em;">Guardar Información</span>
       </v-col>
@@ -275,6 +283,7 @@ export default {
           bloodTypes: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Desconozco'],
           insuranceCompanies: [''],
           insuranceTypes: [''],
+          centrosTrabajo: [''],
           name: '',
           age: null as number | null,
           bloodType: '',
@@ -284,6 +293,8 @@ export default {
           address: '',
           insuranceType: '',
           insuranceCompany: '',
+          centroTrabajo: '',
+          otherCentroTrabajo: '',
           otherInsuranceType: '',
           otherInsuranceCompany: '',
           termsAccepted: false,
@@ -334,6 +345,15 @@ export default {
       if (this.insuranceCompany === 'Otra') {
         this.insuranceCompany = this.otherInsuranceCompany;
       }
+      if (!this.centroTrabajo) {
+        errors.push("El centro de trabajo es obligatorio, puedes mencionar que no tienes si no aplica.");
+      }
+      if (this.centroTrabajo === 'Otro' && !this.otherCentroTrabajo) {
+        errors.push("Debes indicar el centro de trabajo.");
+      }
+      if (this.centroTrabajo === 'Otro') {
+        this.centroTrabajo = this.otherCentroTrabajo;
+      }
       if (!this.termsAccepted) {
         errors.push("Debes aceptar los términos y condiciones.");
       }
@@ -366,7 +386,7 @@ export default {
     }
       const formData = {
         name: this.name,
-        age: this.age,
+        centroTrabajo: this.centroTrabajo,
         bloodType: this.bloodType,
         birthDate: this.birthDate,
         email: this.email,
@@ -412,8 +432,10 @@ export default {
       console.log('Response from getInfo', response);
       this.insuranceTypes = response.data.unique_Tipo_Seguro.filter(Boolean);
       this.insuranceCompanies = response.data.unique_Nombre_Aseguradora.filter(Boolean);
+      this.centrosTrabajo = response.data.unique_Centro_Trabajo.filter(Boolean);
       this.insuranceTypes.push('Otro');
       this.insuranceCompanies.push('Otra');
+      this.centrosTrabajo.push('Otro');
     } catch (error) {
       console.error('Error in getInfo', error);
     } finally {
@@ -439,7 +461,6 @@ export default {
     }
   },
     checkUpdated() {
-      console.log('Checking ', this.insuranceTypes, this.insuranceCompanies);
       if (this.insuranceTypes.length > 1 && this.insuranceCompanies.length > 1) {
         console.log(this.insuranceTypes.length);
         this.loading = false;
@@ -488,7 +509,7 @@ background-color: white !important;
 }
 .gold-bandx {
   background-color:  #b68d2c5d;
-  height: 650px;
+
   width: 100%;
   display: flex;
   justify-content: center;

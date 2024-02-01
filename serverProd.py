@@ -61,7 +61,8 @@ def handle_form():
     form_data = request.json
     image_filename = save_image(form_data['image'], form_data['name'].split(' ')[0])
     csv_file_path = 'users.csv'
-    ip = request.remote_addr
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    print("IP: ", ip)
 
 
     # Read the CSV file into a list of dictionaries
@@ -84,7 +85,7 @@ def handle_form():
         if row['Numero_Tarjeta'] == form_data['folioCheckInicial'] and (now - hora_registro).total_seconds() <= 3600:
             row.update({
             'Nombre_Completo': form_data['name'],
-            'Edad': form_data['age'],
+            'Centro_Trabajo': form_data['centroTrabajo'],
             'Fecha_Nacimiento': form_data['birthDate'],
             'Tipo_Sangre': form_data['bloodType'],
             'Correo_Electronico': form_data['email'],
@@ -105,7 +106,7 @@ def handle_form():
     # Append a new row
         data.append({
             'Nombre_Completo': form_data['name'],
-            'Edad': form_data['age'],
+            'Centro_Trabajo': form_data['centroTrabajo'],
             'Fecha_Nacimiento': form_data['birthDate'],
             'Tipo_Sangre': form_data['bloodType'],
             'Correo_Electronico': form_data['email'],
@@ -135,6 +136,7 @@ def get_info():
     unique_Tipo_Seguro = set()
     unique_Nombre_Aseguradora = set()
     unique_Numero_Tarjeta = set()
+    unique_Centro_Trabajo = set()
 
     # Read and extract the unique values for Tipo_Seguro and Nombre_Aseguradora
     with open(csv_file_path, encoding='latin1', mode='r') as file:
@@ -144,11 +146,15 @@ def get_info():
             unique_Tipo_Seguro.add(row['Tipo_Seguro'])
             unique_Nombre_Aseguradora.add(row['Nombre_Aseguradora'])
             unique_Numero_Tarjeta.add(row['Numero_Tarjeta'])
+            unique_Centro_Trabajo.add(row['Centro_Trabajo'])
     
     # Convert the sets to lists
     unique_Tipo_Seguro = list(unique_Tipo_Seguro)
     unique_Nombre_Aseguradora = list(unique_Nombre_Aseguradora)
     unique_Numero_Tarjeta = list(unique_Numero_Tarjeta)
+    unique_Centro_Trabajo = list(unique_Centro_Trabajo)
+
+    print('Centros: ',unique_Centro_Trabajo)
 
     Numero_Tarjeta = request.args.get('folioCheckInicial')
     now = datetime.now()
@@ -167,7 +173,7 @@ def get_info():
         writer.writeheader()
         writer.writerows(data)
 
-    return jsonify({'unique_Tipo_Seguro': unique_Tipo_Seguro, 'unique_Nombre_Aseguradora': unique_Nombre_Aseguradora}), 200
+    return jsonify({'unique_Tipo_Seguro': unique_Tipo_Seguro, 'unique_Nombre_Aseguradora': unique_Nombre_Aseguradora, 'unique_Centro_Trabajo': unique_Centro_Trabajo}), 200
 
 
 @app.route('/api/pullmoll')

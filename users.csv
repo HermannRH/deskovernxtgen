@@ -1,8 +1,8 @@
-Nombre_Completo,Edad,Fecha_Nacimiento,Tipo_Sangre,Correo_Electronico,Telefono,Direccion,Tipo_Seguro,Nombre_Aseguradora,Numero_Tarjeta,Acepta_Terminos_Condiciones,Nombre_Fotografia,IP,Hora_Registro
-,,,,,,,SGMM,Allianz,,,,,
-,,,,,,,No Aplica,Seguros Atlas,,,,,
-,,,,,,,,Axa,,,,,
-,,,,,,,,Bupa ,,,,,
+Nombre_Completo,Centro_Trabajo,Fecha_Nacimiento,Tipo_Sangre,Correo_Electronico,Telefono,Direccion,Tipo_Seguro,Nombre_Aseguradora,Numero_Tarjeta,Acepta_Terminos_Condiciones,Nombre_Fotografia,IP,Hora_Registro
+,Lala,,,,,,SGMM,Allianz,,,,,
+,Simsa,,,,,,No Aplica,Seguros Atlas,,,,,
+,Combugas,,,,,,,Axa,,,,,
+,Circulo Salud,,,,,,,Bupa ,,,,,
 ,,,,,,,,Bx+ seguros,,,,,
 ,,,,,,,,Aba Auto Seguros,,,,,
 ,,,,,,,,General de Salud,,,,,
@@ -22,7 +22,6 @@ Nombre_Completo,Edad,Fecha_Nacimiento,Tipo_Sangre,Correo_Electronico,Telefono,Di
 ,,,,,,,,Vumi,,,,,
 ,,,,,,,,Zurich,,,,,
 ,,,,,,,,No Tengo,,,,,
-,,,,,,,,,123,,,,2024-02-01 00:06:00
-Hermann,,2002-12-07,A-,dede@gmail.com,6451078451,frefrfrf,No Aplica,No Tengo,123,True,Sin Fotografia,127.0.0.1,2024-02-01 00:08:50
-hrh,,2002-12-07,,herman@gmail.com,6451078451,,AAAAAAA,Bupa ,123,True,Sin Fotografia,127.0.0.1,2024-02-01 00:11:11
-Hremand,,2002-12-07,,de@gmail.com,6451078451,deded,AAAAAAA,No Tengo,123,True,Hremand_6497.png,127.0.0.1,2024-02-01 00:17:36
+,,,,,,,,,9999,,,,2024-02-01 17:35:27
+Hermann Raúl Herrera,Lala,2002-12-07,A-,hermsn@gmail.com,6451078451,"PRÍV GONZÁlez iñarritù %$""·!·""%$&·/%&(/%/)HWEV, 237d, 2398 ''ded""""d e0'd",SGMM,Thona Seguros ,9999,True,Sin Fotografia,127.0.0.1,2024-02-01 17:46:19
+,,,,,,,,,9998,,,,2024-02-01 17:46:55
