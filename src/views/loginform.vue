@@ -40,14 +40,16 @@
   <v-col cols="12" class="pa-2" style="font-size: 0.3em;">
     <!-- File input for uploading image -->
     <v-file-input 
-      ref="fileInput" 
-      label="Fotografía" 
-      prepend-icon="mdi-camera" 
-      hide-details="auto" density="compact" variant="underlined"
-      accept=".jpg, .jpeg, .png"
-      @change="handleFileUpload"
-      >
-    </v-file-input>
+  ref="fileInput" 
+  :label="displayName || 'Fotografía'" 
+  prepend-icon="mdi-camera" 
+  hide-details="auto" 
+  density="compact" 
+  variant="underlined"
+  accept=".jpg, .jpeg, .png"
+  @change="handleFileUpload"
+>
+</v-file-input>
   </v-col>
   </v-row>
   </v-col>
